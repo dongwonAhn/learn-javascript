@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>나머지 매개변수 및 전개구문</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  
+  <div id="practice1">
+    <div>
+      <label for="array1">배열1</label>
+      <input id="array1" type="text" placeholder="예) 1,2,3" />
+    </div>
+    <div>
+      <label for="array2">배열2</label>
+      <input id="array2" type="text" placeholder="예) 4,5,6" />
+    </div>
+    <button type="button">병합</button>
+    <output>{병합된 배열}</output>
+  </div>
+
+  <script>
+    {
+      // ------------------------------------------------------------------------------
+      // 배열 전개
+      // ------------------------------------------------------------------------------
+      // 두 개의 입력 필드에 숫자 배열을 쉼표로 입력하고 버튼을 클릭하면 두 배열을 하나로 결합해 출력하세요.
+      // - 두 배열을 전개(...) 연산자로 병합합니다.
+      // - 병합된 배열을 `<output>` 요소 콘텐츠로 출력합니다.
+      
+      const practice = document.getElementById('practice1')
+
+      practice.addEventListener('click', (e) => {
+        const button = e.target.closest('button')
+        if (!button) return
+
+        let [array1, array2] = practice.querySelectorAll('input')
+        array1 = array1.value.trim().split(',')
+        array2 = array2.value.trim().split(',')
+
+        const outputArray = [...array1, ...array2]
+
+        practice.querySelector('output').value = outputArray.toString()
+
+      })
+
+    }
+  </script>
+</body>
+</html>

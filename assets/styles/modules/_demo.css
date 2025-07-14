@@ -1,0 +1,137 @@
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  min-block-size: 100vh;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  margin: 0;
+
+  &.is-active {
+    background-color: var(--blue-500);
+  }
+}
+
+.clickable {
+  user-select: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  background-color: var(--blue-900);
+  color: var(--blue-100);
+
+  &.is-active {
+    background-color: var(--blue-100);
+    color: var(--blue-800);
+  }
+}
+
+h1 {
+  --font-size: 48px;
+
+  font-weight: 900;
+  font-size: var(--font-size, 2.65rem);
+
+  &::before {
+    content: "🌈 ";
+  }
+}
+
+#exorcist-characters {
+  list-style: none;
+  padding-inline-start: 0;
+
+  li {
+    padding: 4px;
+
+    &.charactor-is-active {
+      font-weight: 900;
+      color: var(--blue-700);
+    }
+  }
+}
+
+.ball {
+  --size: 40px;
+  --fill: #171c28;
+  --fill-hover: #234490;
+  --fill-active: #bc1f49;
+  --radius: 100%;
+
+  inline-size: var(--size);
+  block-size: var(--size);
+  background-color: var(--fill);
+  border-radius: var(--radius);
+  /* 
+  transition: background-color 0.6s linear, 
+              scale 0.4s ease-out; 
+  */
+  transition-property: background-color, inline-size, block-size;
+  transition-duration: 0.6s, 0.4s, 0.4s;
+  transition-timing-function: linear, ease-out, ease-out;
+  transition-delay: 0s, 0.6s, 1s; /* 0s, 0s, 0s */
+
+  /* JavaScript 트랜지션 트리거 - 이벤트 핸들링 + 클래스 이름 추가/제거 */
+  &.is-transition {
+    background-color: var(--fill-active);
+    scale: 1.2;
+  }
+
+  /* CSS 트랜지션 트리거 - 속성 값 상태 변경 */
+  /* &:hover {
+    background-color: var(--fill-hover);
+  }
+
+  &:active {
+    scale: 1.2;
+  } */
+}
+
+.box {
+  inline-size: 60%;
+  border: 4px solid var(--black);
+  padding: 20px;
+
+  &.box1 {
+    background-color: #4b3cf4;
+  }
+  &.box2 {
+    background-color: #00e183;
+  }
+  &.box3 {
+    background-color: #e1005a;
+  }
+}
+
+.link-list {
+  margin-block: 0;
+  border: 6px solid;
+  padding: 15px;
+  list-style-type: "";
+  display: flex;
+  flex-flow: column;
+  gap: 15px;
+
+  li {
+    border: 4px solid;
+    padding: 20px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 2px solid;
+      padding: 10px;
+      text-decoration: none;
+
+      svg,
+      span {
+        pointer-events: none;
+        border: 2px dashed;
+        padding: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>Switch 문</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <section id="practice1">
+      <h2>📆 요일 별, 메시지 출력</h2>
+      <div>
+        <label for="day">요일 선택</label>
+        <input type="text" id="day" placeholder="예: 월요일" />
+      </div>
+      <button type="button">메시지 출력</button>
+      <output>{이모지 및 음식 출력}</output>
+    </section>
+
+    <script>
+      // 실습 1. 요일 별, 메시지 출력
+      // 사용자가 어떤 요일을 입력했는 지에 따라 
+      // 조건 분기하여 화면에 메시지를 출력합니다.
+      ; (() => {
+        
+        // const 요일_메시지 = {
+        //   월요일: '새로운 한 주가 시작됩니다!',
+        //   화요일: '화이팅! 아직 많이 남았어요!',
+        //   수요일: '벌써 주 중반이네요!',
+        //   목요일: '조금만 더 힘내요!',
+        //   금요일: '주말이 코앞입니다!',
+        //   토요일: '즐거운 주말 보내세요!',
+        //   일요일: '편안한 휴일 보내세요!',
+        // }
+
+        const practice = document.getElementById('practice1')
+        const input = practice.querySelector('input')
+        const button = practice.querySelector('button')
+        const output = practice.querySelector('output')
+        
+        button.addEventListener('click', (e) => {
+          let userInputValue = input.value.trim()
+          let outputMessage = '그런 요일은 없어요! 😳'
+
+          switch(userInputValue) {
+            case '월요일':
+            case '월': outputMessage = '새로운 한 주가 시작됩니다!'; break
+            case '화요일':
+            case '화': outputMessage = '화이팅! 아직 많이 남았어요!'; break
+            case '수요일':
+            case '수': outputMessage = '벌써 주 중반이네요!'; break
+            case '목요일':
+            case '목': outputMessage = '조금만 더 힘내요!'; break
+            case '금요일':
+            case '금': outputMessage = '주말이 코앞입니다!'; break
+            case '토요일':
+            case '토': outputMessage = '즐거운 주말 보내세요!'; break
+            case '일요일':
+            case '일': outputMessage = '편안한 휴일 보내세요!'; 
+          }
+        
+          output.textContent = outputMessage
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <section id="practice2">
+      <h2>🍽 음식 별, 이모지 출력</h2>
+      <select aria-label="음식 종류">
+        <option value="">종류 선택</option>
+        <option value="한식">한식</option>
+        <option value="일식">일식</option>
+        <option value="중식">중식</option>
+        <option value="양식">양식</option>
+      </select>
+      <output>{이모지 및 음식 출력}</output>
+    </section>
+
+    <script>
+      // 실습 2. 음식 별, 이모지 출력
+      // 사용자가 어떤 음식 종류를 선택했는 지에 따라 
+      // 조건 분기하여 화면에 이미지와 음식을 출력합니다.
+      ; (() => {
+        
+        const 푸드_카테고리 = {
+          한식: '🍚 김치와 밥!',
+          일식: '🍣 초밥!',
+          중식: '🥡 짜장면!',
+          양식: '🍕 피자!',
+        }
+
+        const practice = document.getElementById('practice2')
+        const select = practice.querySelector('select')
+        const output = practice.querySelector('output')
+
+        select.addEventListener('change', (e) => {
+          const selectedFood = e.currentTarget.value
+          
+          switch(selectedFood) {
+            case '한식': output.value = '🍚 김치와 밥!'; break
+            case '일식': output.value = '🍣 초밥!'; break
+            case '중식': output.value = '🥡 짜장면!'; break
+            case '양식': output.value = '🍕 피자!'; break
+            default: output.value = '🧑🏻‍🍳 원하는 메뉴를 선택해주세요!'
+          }
+
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <section id="practice3">
+      <h2>🎯 취미 별, 카테고리 출력</h2>
+      <select aria-label="취미">
+        <option value="">취미를 선택하세요</option>
+        <option value="수영">수영</option>
+        <option value="영화 감상">영화 감상</option>
+        <option value="게임">게임</option>
+        <option value="조깅">조깅</option>
+      </select>
+      <!-- <p>{이모지 및 취미 카테고리 출력}</p> -->
+      <output>{이모지 및 취미 카테고리 출력}</output>
+    </section>
+
+    <script>
+      // 실습 3. 취미 별, 카테고리 출력
+      // 사용자가 어떤 취미를 선택했는 지에 따라 
+      // 조건 분기하여 화면에 취미 카테고리를 출력합니다.
+      ; (() => {
+        
+        const 취미_카테고리 = {
+          '🏖 수상 스포츠': ['수영', '스킨스쿠버', '윈드서핑'],
+          '📚 실내 취미': ['영화 감상', '독서'],
+          '🏃‍♂️ 야외 활동': ['조깅', '등산'],
+          '취미를 선택하세요': [''],
+        }
+
+        const practice = document.getElementById('practice3')
+        const select = practice.querySelector('select')
+        const output = practice.querySelector('output')
+
+        console.dir(output)
+
+        select.addEventListener('change', (e) => {
+          const selectedHobby = e.currentTarget.value
+          
+          switch(selectedHobby) {
+            case '수영':
+            case '스킨스쿠버':
+            case '윈드서핑':
+              output.value = '🏖 수상 스포츠'
+              break
+            case '영화 감상':
+            case '게임':
+            case '독서':
+              output.value = '📚 실내 취미'
+              break
+            case '조깅':
+            case '등산':
+              output.value = '🏃‍♂️ 야외 활동'
+              break
+            default:
+              output.value = '취미를 선택하세요 🥳'
+          }
+
+        })
+
+      })()
+    </script>
+
+  </body>
+
+</html>

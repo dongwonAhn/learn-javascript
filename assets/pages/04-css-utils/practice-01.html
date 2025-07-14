@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>레인지 인풋으로 색상 변경</title>
+    <style>
+      .text {
+        font-size: 16px;
+        color: #2d3436;
+      }
+
+      .slider-container {
+        margin-top: 1rem;
+      }
+
+      label {
+        font-size: 14px;
+        margin-right: 8px;
+      }
+    </style>
+    <script src="../../scripts/utils/css.js"></script>
+  </head>
+  <body>
+    <div class="slider-container">
+      <label for="fontSizeSlider">글자 크기:</label>
+      <input type="range" id="fontSizeSlider" min="12" max="48" value="16" />
+      <output id="fontSizeValue">16px</output>
+    </div>
+
+    <p class="text">이 텍스트의 글자 크기를 조절해 보세요!</p>
+
+    <script>
+      {
+        // 글자 크기 조정
+        // 레인지(range) 인풋 값이 변경되면 `.text` 요소의 글자 크기가 변경되도록 구현합니다.
+        const textElement = document.querySelector(".text")
+        const rangeInput = document.getElementById("fontSizeSlider")
+        const output = document.getElementById("fontSizeValue")
+        // console.log(rangeInput)
+
+        // text 요소의 글자 크기 값 가져오기
+        // const textSize = css(textElement, 'font-size')
+        // console.log(textSize)
+
+        // text 요소의 글자 크기 값 설정하기
+        // css(textElement, 'font-size', '60px')
+
+        // 레인지 인풋 change 이벤트 리스너 추가
+        // change 이벤트 : 마우스로 값을 변경할 때가 아니라, 마우스를 놓을 때 값이 반영(변경)
+        // input 이벤트 : 값이 인풋(입력)될 때 마다 이벤트가 발생
+        rangeInput.addEventListener('input', () => {
+          const fontSizeValue = rangeInput.value + 'px'
+          // DOM 업데이트
+          // 텍스트 요소의 글자 크기 변경
+          css(textElement, 'font-size', fontSizeValue)
+          // 아웃풋 요소의 값 변경
+          output.value = fontSizeValue
+        })
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>유용한 배열 메서드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        padding: 12px;
+      }
+
+      #practice5 {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        div {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+      }
+    </style>
+    <script>
+      const users = [
+        { id: 1, name: '지수', location: '서울', nationality: '대한민국' },
+        { id: 2, name: '유키', location: '오사카', nationality: '일본' },
+        { id: 3, name: '아리아', location: '뉴욕', nationality: '미국' },
+        { id: 4, name: '유나', location: '부산', nationality: '대한민국' },
+        { id: 5, name: '마테오', location: '방콕', nationality: '태국' },
+        { id: 6, name: '올리비아', location: '토론토', nationality: '캐나다' },
+        { id: 7, name: '노아', location: '베를린', nationality: '독일' },
+        { id: 8, name: '민지', location: '인천', nationality: '대한민국' },
+        { id: 9, name: '에이든', location: '파리', nationality: '프랑스' },
+        { id: 10, name: '현지', location: '대구', nationality: '대한민국' },
+        { id: 11, name: '루카스', location: '도쿄', nationality: '일본' },
+        { id: 12, name: '아일라', location: '로스앤젤레스', nationality: '미국' },
+        { id: 13, name: '은우', location: '광주', nationality: '대한민국' },
+        { id: 14, name: '밀라', location: '하노이', nationality: '베트남' },
+        { id: 15, name: '지민', location: '제주', nationality: '대한민국' },
+        { id: 16, name: '히로', location: '교토', nationality: '일본' },
+        { id: 17, name: '엠마', location: '시카고', nationality: '미국' },
+        { id: 18, name: '유토', location: '나고야', nationality: '일본' },
+        { id: 19, name: '클로이', location: '시드니', nationality: '호주' },
+        { id: 20, name: '지원', location: '대전', nationality: '대한민국' },
+        { id: 21, name: '레비', location: '런던', nationality: '영국' },
+        { id: 22, name: '서진', location: '수원', nationality: '대한민국' },
+        { id: 23, name: '유키', location: '후쿠오카', nationality: '일본' },
+        { id: 24, name: '메이슨', location: '멜버른', nationality: '호주' },
+        { id: 25, name: '하나', location: '상하이', nationality: '중국' },
+      ]
+    </script>
+  </head>
+
+  <body>
+
+    <div id="practice1" hidden>
+      <div>
+        <label for="practice1-location">거주지</label>
+        <input type="text" id="practice1-location" />
+      </div>
+      <button type="button">인덱스 확인</button>
+      <output>{인덱스 출력}</output>
+    </div>
+
+    <script>
+        ; (() => {
+          // -----------------------------------------------------------------
+          // 거주지 일치, 인덱스 출력
+          // -----------------------------------------------------------------
+          // 거주지를 입력한 후, 인덱스 확인 버튼을 누르면 결과가 화면에 출력되도록 구현합니다.
+          // - `users` 배열의 각 항목과 비교해 일치할 경우 해당 인덱스 출력
+          // - 일치하는 항목이 없을 경우 `-1` 출력
+
+        })
+    </script>
+
+    <div id="practice2" hidden>
+      <div>
+        <label for="practice2-nationality">국적</label>
+        <input type="text" id="practice2-nationality" />
+      </div>
+      <button type="button">이름 확인</button>
+      <output>{이름 출력}</output>
+    </div>
+
+    <script>
+        ; (() => {
+          // -----------------------------------------------------------------
+          // 국적 일치, 사용자 이름 출력
+          // -----------------------------------------------------------------
+          // 국적을 입력한 후, 이름 확인 버튼을 누르면 결과가 화면에 출력되도록 구현합니다.
+          // - users 배열의 각 항목과 비교해 일치할 경우 해당 이름(name) 출력
+          // - 일치하는 항목이 없을 경우 사용자 없음 출력
+
+        })
+    </script>
+
+    <div id="practice3" hidden>
+      <div>
+        <label for="practice3-nationality">국적</label>
+        <select id="practice3-nationality" name="nationality">
+          <option value="">국적 선택</option>
+          <option value="대한민국">대한민국</option>
+          <option value="일본">일본</option>
+          <option value="미국">미국</option>
+          <option value="태국">태국</option>
+          <option value="캐나다">캐나다</option>
+          <option value="독일">독일</option>
+          <option value="프랑스">프랑스</option>
+          <option value="베트남">베트남</option>
+          <option value="호주">호주</option>
+          <option value="영국">영국</option>
+          <option value="중국">중국</option>
+        </select>
+      </div>
+      <pre>{사용자 그룹 출력}</pre>
+    </div>
+
+    <script>
+        ; (() => {
+          // -----------------------------------------------------------------
+          // 국적 일치, 사용자 그룹 출력
+          // -----------------------------------------------------------------
+          // 국적을 입력한 후, 이름 확인 버튼을 누르면 결과가 화면에 출력되도록 구현합니다.
+          // - users 배열의 각 항목과 비교해 일치할 경우, 국적을 필터링한 사용자 그룹 출력
+          // - <option> 요소의 value 값이 빈 문자열인 경우, 모든 사용자를 포함한 그룹 출력
+          // - 사용자 그룹 출력 시, JSON.stringify(filteredUsers, null, 2) 구문 활용
+
+        })
+    </script>
+
+    <div id="practice4" hidden>
+      <div>
+        <label for="practice4-prefix">ID 접두사</label>
+        <input type="text" id="practice4-prefix" placeholder="yamoo9" />
+      </div>
+      <button type="button">고유 ID 사용자 그룹 생성</button>
+      <pre>{사용자 그룹 출력}</pre>
+    </div>
+
+    <script>
+        ; (() => {
+          // ----------------------------------------------------------------------------
+          // 고유 ID 설정, 사용자 그룹 출력
+          // ----------------------------------------------------------------------------
+          // ID 접두사를 입력한 후, 고유 ID 사용자 그룹 생성 버튼을 누르면 결과가 화면에 출력되도록 구현합니다.
+          // - users 배열의 각 항목을 순환해 id 속성 값을 ID 접두사를 추가해 고유 ID 값으로 변경
+          // - 사용자 그룹 출력 시, JSON.stringify(filteredUsers, null, 2) 구문 활용
+
+        })
+    </script>
+
+    <div id="practice5">
+      <div>
+        <label for="practice5-prefix">ID 접두사</label>
+        <input type="text" id="practice5-prefix" placeholder="yamoo9" />
+      </div>
+      <div>
+        <label for="practice5-nationality">국적</label>
+        <select id="practice5-nationality" name="nationality">
+          <option value="">국적 선택</option>
+          <option value="대한민국">대한민국</option>
+          <option value="일본">일본</option>
+          <option value="미국">미국</option>
+          <option value="태국">태국</option>
+          <option value="캐나다">캐나다</option>
+          <option value="독일">독일</option>
+          <option value="프랑스">프랑스</option>
+          <option value="베트남">베트남</option>
+          <option value="호주">호주</option>
+          <option value="영국">영국</option>
+          <option value="중국">중국</option>
+        </select>
+      </div>
+      <pre>{사용자 그룹 출력}</pre>
+    </div>
+
+    <script>
+        ; (() => {
+          // -----------------------------------------------------------------
+          // 국적 일치 & 고유 ID 설정, 사용자 그룹 출력
+          // -----------------------------------------------------------------
+          // ID 접두사 또는 국적을 사용자가 변경하면, 변경된 결과가 화면에 출력되도록 구현합니다.
+          // - 이벤트 위임 방법 활용
+          // - 메서드 체이닝 활용
+          // - 사용자 그룹 출력 시, JSON.stringify(filteredUsers, null, 2) 구문 활용
+
+          const practice = document.getElementById('practice5')
+          const prefixInput = practice.querySelector('#practice5-prefix')
+          const nationalitySelect = practice.querySelector('#practice5-nationality')
+          const output = practice.querySelector('pre')
+
+          printData(users)
+
+          // 이벤트 위임
+          practice.addEventListener('input', (e) => {
+            
+            const filteredUsers = users
+              .map((user) => {
+                const prefix = prefixInput.value.trim()
+                return { 
+                  ...user, id: `${prefix}${prefix ? '-' : ''}${user.id}` 
+                }
+              })
+              .filter((user) => {
+                const filterKey = nationalitySelect.value
+                if (!filterKey) return users
+                return user.nationality === filterKey
+              })
+
+            printData(filteredUsers)
+          })
+
+          function printData(data) {
+            output.textContent = JSON.stringify(data, null, 2) 
+          }
+
+        })()
+    </script>
+
+  </body>
+
+</html>

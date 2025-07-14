@@ -1,0 +1,27 @@
+.offsite-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -14rem;
+  width: 14rem;
+  background-color: var(--menu-background-color);
+}
+
+.site-container {
+  padding-top: 3rem;
+  padding-left: 2.5rem;
+  max-width: 33rem;
+}
+
+.offsite-is-open {
+  .offsite-container,
+  .site-container {
+    /* CSS Transform */
+    /* transform: translateX(14rem); */
+    translate: 14rem 0;
+  }
+}
+
+/* 상태(status, state) 클래스 이름 */
+/* .offsite-is-open {
+} */

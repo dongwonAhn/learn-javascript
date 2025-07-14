@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>이벤트 전파 (Event Propagation)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    .outer {
+      cursor: pointer;
+      border: 4px solid black;
+      padding: 30px;
+      &:hover {
+        background-color: rgba(0 0 0 / 0.1);
+      }
+
+      .middle {
+        border: inherit;
+        border-color: red;
+        padding: inherit;
+        &:hover {
+          background-color: rgba(255 0 0 / 0.2);
+        }
+
+        .inner {
+          border: inherit;
+          border-color: maroon;
+          padding: inherit;
+          font-weight: 900;          
+          &:hover {
+            background-color: rgba(128 0 0 / 0.3);
+          }
+
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">이벤트 단계 비교</div>
+    </div>
+  </div>
+
+  <script>
+    {
+      // 이벤트 단계 비교 
+      // 다음의 HTML 구조를 작성하고 이벤트를 연결해 단계 별 작동 흐름을 확인하는 연습을 진행합니다.
+
+      // 1. 모든 <div> 요소에 이벤트 리스너를 두 번씩(캡쳐링, 버블링 단계 수신) 등록하세요.
+      document.querySelectorAll('div').forEach((div) => {
+        // 캡쳐링 단계
+        div.addEventListener('click', (e) => {
+          if(e.eventPhase === 2) {
+            console.log('%c타겟: ' + e.currentTarget.classList.value, 'color: orange; background-color: rgba(255 150 0 / 0.1)')
+          } else {
+            console.log('%c캡쳐링: ' + e.currentTarget.classList.value, 'color: red; background-color: rgba(255 0 0 / 0.2)')
+          }
+        }, true)
+
+        // 버블링 단계
+        div.addEventListener('click', (e) => {
+          const targetName = e.currentTarget.classList.value
+
+          if(e.eventPhase === 2) {
+            console.log('%c타겟: ' + targetName, 'color: orange; background-color: rgba(255 150 0 / 0.1)')
+          } else {
+            console.log('%c버블링: ' + targetName, 'color: blue;  background-color: rgba(0 0 255 / 0.2)')
+          }
+
+          if (targetName === 'middle') {
+            console.log('버블링 이벤트 전파 중지')
+            e.stopPropagation()
+          }
+        
+        }, false)
+      })
+
+      // 2. 각 이벤트 리스너의 콜백은 다음 형식의 로그를 출력해야 합니다. `console.log('캡쳐링: outer')`
+      // 3. 문서에서 요소를 클릭 시, 어떤 순서로 이벤트가 전파되는 지 콘솔을 통해 확인합니다.
+
+      // 이벤트 전파 중지
+
+      // 위와 동일한 HTML 구조에서 `.inner`의 클릭 이벤트 핸들러 콜백에서 이벤트 전파를 중단하도록 설정하세요.
+      // 기대 상황은 `.middle`, `.outer` 요소의 이벤트 리스너 콜백이 실행되지 않아야 합니다.
+
+      // document.querySelector('.inner')
+      //   .addEventListener('click', () => {
+      //     // ...
+      //     console.log('inner 클릭됨 - 전파 중단')
+      //   }
+      // )
+    }
+  </script>
+
+</body>
+</html>

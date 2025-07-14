@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+	<head>
+	  <meta charset="UTF-8" />
+	  <title>노드와 요소 실습</title>
+	  <style>
+	    .box {
+	      padding: 10px;
+	      border: 2px solid royalblue;
+	      margin: 10px;
+	    }
+	  </style>
+	</head>
+	<body>
+	  <div id="example" class="box">
+      안녕 <strong>JavaScript</strong>!
+	  </div>
+	
+	  <button
+		  type="button"
+		  onclick="inspectNodes()"
+		>
+			노드와 요소 확인하기
+		</button>
+	
+	  <script>
+	    function inspectNodes() {
+	      const example = document.getElementById('example')
+	      
+	      console.log('✅ example:', example)
+	      console.log('🔍 example.nodeType:', example.nodeType) // 1 (Element)
+	      console.log('🧱 example.textContent:', example.textContent); // 안녕 JavaScript!
+	
+	      const childNodes = example.childNodes // 모든 하위 노드 (텍스트 + 요소)
+	      console.log('📦 childNodes:', childNodes)
+	
+	      childNodes.forEach((node, index) => {
+	        console.log(`🔎 [${index}] nodeType:`, node.nodeType)
+	        console.log(`🧾 [${index}] nodeName:`, node.nodeName)
+	        console.log(`💬 [${index}] textContent:`, node.textContent.trim())
+	      })
+	
+	      // 요소만 필터링
+        // Node.children -> HTMLCollection[ ElementNode ]
+	      const elementChildren = Array.from(childNodes)
+		      .filter(n => n.nodeType === document.ELEMENT_NODE)
+		      
+	      console.log('📂 요소 노드만:', elementChildren)
+	    }
+	  </script>
+	</body>
+</html>

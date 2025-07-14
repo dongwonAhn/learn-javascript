@@ -1,0 +1,15 @@
+html {
+  font-size: 120%;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  line-height: 1.25;
+}

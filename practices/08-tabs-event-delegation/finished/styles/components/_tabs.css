@@ -1,0 +1,80 @@
+.tabs__container {
+  max-inline-size: 45rem;
+  margin: auto;
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+    .tab {
+      position: relative;
+      margin-block-end: -0.5rem;
+      padding: 1rem;
+      background-color: var(--indigo-100);
+      border: 0.5rem solid var(--border-color);
+      filter: grayscale(75%) brightness(0.9);
+      color: var(--text-color);
+
+      &.is-selected {
+        filter: none;
+        padding-block: 1.25rem 0.5rem;
+        background-color: var(--white);
+        font-size: 1.3rem;
+        font-weight: 800;
+        
+        &::after {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          right: 0;
+          bottom: -0.5rem;
+          left: 0;
+          border-bottom: 0.5rem solid var(--white);
+        }
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+
+    }
+  }
+
+  .tab__contents {
+    position: relative;
+
+    .tab__content {
+      display: none;
+      padding: 2.5rem;
+      border: 0.5rem solid var(--border-color);
+      background-color: var(--white);
+      
+      &.is-selected {
+        display: block;
+      }
+
+      p {
+        max-inline-size: 30rem;
+        font-size: 20px;
+        line-height: 1.8;
+      }
+
+      a {
+        color: var(--text-color);
+      }
+
+      img {
+        float: right;
+        inline-size: calc((100% - 1em) / 2);
+        margin-inline-start: 1rem;
+        margin-block-start: 1rem;
+      }
+    }
+  }
+
+}

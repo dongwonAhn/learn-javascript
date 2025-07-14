@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+	<head>
+	  <meta charset="UTF-8" />
+	  <title>계산된 스타일 읽기</title>
+	  <style>
+	    .box {
+	      width: 200px;
+	      height: 100px;
+        padding: 12px 0 0 12px;
+	      background-color: #3498db;
+	      color: white;
+	      font-size: 18px;
+	    }
+	  </style>
+    <script>
+      {
+        // 계산된 스타일 읽기
+        // 요소의 스타일을 getComputedStyle() 메서드로 읽어 콘솔 패널에 출력합니다.
+
+        document.addEventListener('DOMContentLoaded', () => {
+          const boxElement = document.querySelector('.box')
+          const boxElementStyles = getComputedStyle(boxElement)
+          console.log(boxElementStyles.width)
+          console.log(boxElementStyles.height)
+          console.log(boxElementStyles.padding)
+          console.log(boxElementStyles.paddingTop)
+          console.log(boxElementStyles.paddingBlockEnd)
+          console.log(boxElementStyles.paddingInlineStart)
+          console.log(boxElementStyles.background)
+          console.log(boxElementStyles.backgroundColor)
+          console.log(boxElementStyles.color)
+          console.log(boxElementStyles.fontSize)
+          // console.log(boxElementStyles.getPropertyValue('width'))
+          // console.log(boxElementStyles.getPropertyValue('height'))
+          // console.log(boxElementStyles.getPropertyValue('padding'))
+          // console.log(boxElementStyles.getPropertyValue('padding-top'))
+          // console.log(boxElementStyles.getPropertyValue('padding-block-end'))
+          // console.log(boxElementStyles.getPropertyValue('padding-inline-start'))
+          // console.log(boxElementStyles.getPropertyValue('background'))
+          // console.log(boxElementStyles.getPropertyValue('background-color'))
+          // console.log(boxElementStyles.getPropertyValue('color'))
+          // console.log(boxElementStyles.getPropertyValue('font-size'))
+        })
+      }
+    </script>
+	</head>
+	<body>
+	  
+	  <p class="box">스타일을 읽어보세요!</p>
+	
+	</body>
+</html>

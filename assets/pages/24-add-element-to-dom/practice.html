@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>DOM에 요소 추가</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+
+      .todo-list {
+        list-style-type: '';
+        padding-inline-start: 0;
+        display: grid;
+        gap: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <section id="practice1">
+      <h2>📋 오늘의 할 일</h2>
+      <form>
+        <input type="text" aria-label="할 일" placeholder="할 일 작성" />
+        <button type="submit">추가</button>
+      </form>
+      <ul class="todo-list"></ul>
+    </section>
+
+    <script>
+      // 실습 1. 할 일 추가
+      // 사용자가 "할 일" 입력 후, 추가 버튼을 누르면 
+      // 할 일 목록 요소에 새 "할 일"이 추가되도록 구현합니다.
+      ; (() => {
+        // 할 일 목록 (참고)
+        const todos = [
+          '아침 식사 준비하기',
+          '출근 준비하기',
+          '이불 정리하기',
+          '식물에 물 주기',
+          '운동 30분 하기',
+          '이메일 확인하기',
+          '중요 서류 정리하기',
+          '점심 메뉴 정하기',
+          '친구에게 안부 문자 보내기',
+          '책 10페이지 읽기',
+          '쓰레기 분리수거 하기',
+          '반려동물 산책시키기',
+          '저녁 식사 준비하기',
+          '우유나 식재료 사기',
+          '가족과 대화 나누기',
+          '내일 일정 미리 확인하기',
+          '설거지 하기',
+          '스트레칭이나 요가 하기',
+          '집안 환기시키기',
+          '일기 쓰기'
+        ]
+
+        const practice = document.getElementById('practice1')
+        const todoList = practice.querySelector('.todo-list')
+        const form = practice.querySelector('form')
+        // console.dir(form) // HTMLFormElement { childNodes, children, elements }
+        // console.log(form.elements) // HTMLFormContorlsCollection (유사 배열 객체)
+        // const [input, button] = form.elements
+        const [todoInput] = form.elements 
+        // const todoInput = form.elements[0]
+
+        form.addEventListener('submit', (e) => {
+          // 기본 작동 방지
+          e.preventDefault()
+          
+          const newTodoItem = document.createElement('li')
+          newTodoItem.textContent = todoInput.value.trim()
+          // <li>가족과 대화 나누기</li>
+
+          todoList.appendChild(newTodoItem)
+          // <ul class="todo-list">
+          //   <li>배고프면 점심 먹기!</li>
+          //   <li>가족과 대화 나누기</li>
+          // </ul>
+
+          todoInput.value = ''
+          todoInput.focus()
+        
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <section id="practice2">
+      <h2>🍜 라면 레시피</h2>
+      <button type="button">"면을 넣고" 앞에 추가</button>
+      <ol class="recipe-list">
+        <li>물을 냄비에 붓고 끓입니다.</li>
+        <!-- 여기에 동적으로 생성된 요소를 삽입합니다. -->
+        <li>면을 넣고 3~4분간 끓입니다.</li>
+      </ol>
+    </section>
+
+    <script>
+      // 실습 2. 다른 요소 앞에 추가
+      // "면을 넣고" 앞에 추가 버튼을 누르면 "물이 끓으면 스프를 넣습니다." 항목을 
+      // "면을 넣고" 항목 앞에 추가하는 코드를 작성합니다.
+      ; (() => {
+        const practice = document.getElementById('practice2')
+        const recipeList = practice.querySelector('.recipe-list')
+
+        // 이벤트 위임
+        practice.addEventListener('click', ({ target }) => {
+          // 가장 가까운 선택자와 일치하는 요소를 찾기 (버튼 포함)
+          const button = target.closest('button')
+          // 빠른 반환
+          if (!button) return
+
+          // 동적 요소 생성
+          const recipeItem = document.createElement('li')
+          recipeItem.textContent = '물이 끓으면 스프를 넣습니다.'
+
+          // 특정 요소 앞에 동적 생성된 요소 삽입
+          recipeList.insertBefore(recipeItem, recipeList.lastElementChild)
+
+        })
+      })()
+    </script>
+
+    <hr />
+
+    <div id="practice3">
+      <button type="button">"망고"를 "포도" 앞으로 이동</button>
+
+      <h2>🍉 좋아하는 과일</h2>
+      <ol class="fruits-i-like">
+        <li>수박</li>
+        <li>망고</li>
+      </ol>
+
+      <h2>🍇 안 좋아하는 과일</h2>
+      <ol class="fruits-i-dont-like">
+        <li>포도</li>
+      </ol>
+    </div>
+
+    <script>
+      // 실습 3. 다른 목록으로 이동
+      // '"망고"를 "포도" 앞으로 이동' 버튼을 클릭하면 
+      // "망고"를 "안 좋아하는 과일" 목록으로 이동하는 코드를 작성합니다.
+      // "포도" 앞에 "망고"를 삽입
+      // 1회만 클릭 이벤트가 작동
+      ; (() => {
+        const ilikeFruits = document.querySelector('.fruits-i-like')
+        const idontlikeFruits = document.querySelector('.fruits-i-dont-like')
+        const button = document.querySelector('#practice3 button')
+
+        button.addEventListener('click', () => {
+          const insertFruit = ilikeFruits.lastElementChild
+          const targetFruit = idontlikeFruits.firstElementChild
+          targetFruit.parentElement.insertBefore(insertFruit, targetFruit)
+        }, { once: true })
+
+      })()
+    </script>
+
+  </body>
+
+</html>

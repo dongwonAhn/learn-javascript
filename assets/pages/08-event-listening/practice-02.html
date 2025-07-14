@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>상품 카드 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .card-container {
+        display: flex;
+        gap: 16px;
+        padding: 16px;
+      }
+    
+      .card {
+        flex: 1;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 16px;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    
+      .card h3 {
+        margin: 0 0 8px;
+      }
+    
+      .card p {
+        margin: 0 0 12px;
+        color: #666;
+      }
+    
+      .card strong {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+      }
+    
+      .card button {
+        background-color: #42a5f5;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    
+      .card button:hover {
+        background-color: #1e88e5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card-container">
+      <article class="card">
+        <h3>무선 이어폰</h3>
+        <p>노이즈 캔슬링 기능 포함</p>
+        <strong>129,000원</strong>
+        <button type="button">자세히 보기</button>
+      </article>
+    
+      <article class="card">
+        <h3>스마트 워치</h3>
+        <p>헬스 트래킹 및 알림 기능</p>
+        <strong>189,000원</strong>
+        <button type="button">자세히 보기</button>
+      </article>
+    
+      <article class="card">
+        <h3>게이밍 키보드</h3>
+        <p>RGB 백라이트와 기계식 스위치</p>
+        <strong>89,000원</strong>
+        <button type="button">자세히 보기</button>
+      </article>
+    </div>
+
+    <script>
+      {
+
+        // 상품 카드 목록
+        // `this` 키워드를 사용해 다음 요구사항을 구현합니다.
+        // 1. 버튼 중 하나를 클릭하면 버튼이 포함된 카드(card) 제목을 콘솔 패널에 출력합니다.
+
+        const cardButtons = document.querySelectorAll('.card button')
+
+        for(const cardButton of cardButtons) {
+          cardButton.addEventListener('click', function() {
+            const cartTitle = this.parentElement.firstElementChild.textContent
+            console.log(cartTitle)
+
+            // const headlineElement = cardButton.parentElement.firstElementChild
+            // console.log(headlineElement.textContent)
+          })
+        }
+      }
+    </script>
+  </body>
+
+</html>

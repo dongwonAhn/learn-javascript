@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>이벤트 추가, 제거 및 초기화</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+
+        .button-group {
+          display: flex;
+          justify-content: center;
+          gap: 4px;
+        }
+
+        button {
+          flex-shrink: 0;
+          display: block;
+          margin: 1rem auto;
+          padding: 0.5rem 1rem;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        output {
+          margin-top: 2rem;
+          font-size: 18px;
+          color: #333;
+        }
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const resetButton = document.querySelector('[data-id="reset-button"]');
+        const logButton = document.querySelector('[data-id="log-button"]');
+        const removeButton = document.querySelector(
+          '[data-id="remove-button"]'
+        );
+        const limitedButton = document.querySelector(
+          '[data-id="limited-button"]'
+        );
+        const output = document.querySelector("output");
+
+        let clickedCount = 0;
+
+        // 이벤트 리스너(핸들러)
+        const handleIncreaseClickCount = () => {
+          clickedCount += 1;
+          output.value = "버튼이 " + clickedCount + "번 클릭되었습니다.";
+        };
+
+        // 1. '클릭 메시지 출력' 버튼 클릭 시,
+        //    output에 '버튼이 n번 클릭되었습니다' 출력
+        logButton.addEventListener("click", handleIncreaseClickCount);
+
+        // 2. '리스너 제거' 버튼 클릭 시,
+        //    위 버튼의 이벤트 리스너 제거
+        //    output에 '추가된 이벤트 리스너가 제거되었습니다.' 출력
+        removeButton.addEventListener("click", () => {
+          logButton.removeEventListener("click", handleIncreaseClickCount);
+          // console.log('추가된 이벤트 리스너가 제거되었습니다.')
+          output.value = "추가된 이벤트 리스너가 제거되었습니다.";
+        });
+
+        // 3. '3번만 클릭 가능' 버튼은 클릭할 때마다 횟수를 세고,
+        //    세 번째 클릭 후 자동으로 리스너 제거
+        limitedButton.addEventListener("click", () => {
+          if (clickedCount < 3) {
+            logButton.click();
+          } else {
+            removeButton.click();
+          }
+        });
+
+        // 4. 초기화 기능
+        //    다시 처럼으로 돌아가 코드가 실행되도록 구현
+        resetButton.addEventListener("click", () => {
+          clickedCount = 0;
+          logButton.addEventListener("click", handleIncreaseClickCount);
+          output.value = "클릭 횟수 출력";
+        });
+      });
+    </script>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. '클릭 메시지 출력' 버튼 클릭 시,
+        //    output에 '버튼이 n번 클릭되었습니다' 출력
+        // 2. '리스너 제거' 버튼 클릭 시,
+        //    위 버튼의 이벤트 리스너 제거
+        //    output에 '이벤트가 제거되었습니다.' 출력
+        // 3. '3번만 클릭 가능' 버튼은 클릭할 때마다 횟수를 세고,
+        //    세 번째 클릭 후 자동으로 리스너 제거
+        // 4. 초기화 기능
+        //    다시 처럼으로 돌아가 코드가 실행되도록 구현
+      });
+    </script> -->
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="button-group">
+        <button data-id="reset-button">초기화</button>
+        <button data-id="log-button">클릭 메시지 출력</button>
+        <button data-id="remove-button">리스너 제거</button>
+        <button data-id="limited-button">3번만 클릭 가능</button>
+      </div>
+      <output>클릭 횟수 출력</output>
+    </div>
+  </body>
+</html>

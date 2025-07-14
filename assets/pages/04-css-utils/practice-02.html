@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>글자, 배경 색상 조절</title>
+    <style>
+      .text {
+        padding: 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+        color: #000000;
+        background-color: #ffffff;
+      }
+
+      .controls {
+        margin-top: 2rem;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      input[type="color"] {
+        width: 60px;
+        height: 30px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+    </style>
+    <script src="/assets/scripts/utils/css.js"></script>
+    <script src="/assets/scripts/utils/query.js"></script>
+    <script src="/assets/scripts/utils/events.js"></script>
+  </head>
+  <body>
+    <div class="controls">
+      <label for="textColor">
+        글자색
+        <input type="color" id="textColor" value="#000000" />
+      </label>
+
+      <label for="backgroundColor">
+        배경색
+        <input type="color" id="backgroundColor" value="#ffffff" />
+      </label>
+    </div>
+
+    <p class="text">이 텍스트의 글자 및 배경 색상을 조절해 보세요!</p>
+
+    <script>
+      {
+        // 글자 및 배경 색상 조절
+        // 레인지(range) 인풋 값이 변경되면 `.text` 요소의 글자 및 배력 색상이 변경되도록 구현합니다.
+
+        // 텍스트 엘리먼트 찾기
+        const textElement = query(".text");
+
+        // 텍스트 엘리먼트에서 전경(foreground)/배경(background) 색상 값 읽기
+        const foregroundColor = css(textElement, "color");
+        const backgroundColor = css(textElement, "background-color");
+
+        // 컬러 인풋 엘리먼트 찾기
+        const fgInput = byId("textColor");
+        const bgInput = byId("backgroundColor");
+
+        // 각 인풋 엘리먼트의 값 설정 (skip)
+        // fgInput.value = rgbToHex(foregroundColor) // '#fe9900'
+        // bgInput.value = rgbToHex(backgroundColor) // '#0088f8'
+
+        // 각 인풋 엘리먼트에 change 또는 input 이벤트 리스너 추가
+        on(fgInput, "input", () => {
+          // 텍스트 엘리먼트에서 전경(foreground) 색상 값 쓰기(설정)
+          // 유틸리티 함수를 사용하는 이유 (편리함, 코드 로직 재사용)
+          // css(textElement, 'color', fgInput.value)
+          textElement.style.setProperty("color", fgInput.value);
+        });
+
+        bgInput.addEventListener("input", () => {
+          // 텍스트 엘리먼트에서 배경(background) 색상 값 쓰기(설정)
+          // css(textElement, 'background-color', bgInput.value)
+          textElement.style.setProperty("background-color", bgInput.value);
+        });
+
+        // const textElement = document.querySelector(".text");
+        // console.log(textElement);
+        // 이 코드 하면 사진처럼 콘솔에 두개 중 하나 번갈아가면서 뜨는데 왜 그렇죠ㅠㅠ
+      }
+    </script>
+    <!-- <script>
+      {
+        // ## 글자 및 배경 색상 조절
+        // 레인지(range) 인풋 값이 변경되면 `.text` 요소의 글자 및 배경 색상이 변경되도록 구현합니다.
+        const textEl = document.querySelector(".text")
+        const textColorInput = document.getElementById("textColor")
+        const backgroundColorInput = document.getElementById("backgroundColor")
+
+        // 글자색 변경
+        textColorInput.addEventListener("input", (e) => {
+          textEl.style.color = e.target.value
+        })
+
+        // 배경색 변경
+        backgroundColorInput.addEventListener("input", (e) => {
+          textEl.style.backgroundColor = e.target.value
+        })
+      }
+    </script> -->
+  </body>
+</html>

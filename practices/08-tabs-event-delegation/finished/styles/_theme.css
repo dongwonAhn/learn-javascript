@@ -1,0 +1,24 @@
+:root {
+  /* foreground / background */
+  --text-color: light-dark(var(--stone-950), var(--stone-50));
+  --background-color: light-dark(var(--yellow-500), var(--blue-950));
+
+  --indigo-50: #e0e8f9;
+  --indigo-100: #bed0f7;
+}
+
+/* Tabs */
+[data-theme="digimon"] {
+  --border-color: hsl(215, 46%, 42%);
+  --text-color: hsl(215, 63%, 23%);
+}
+
+[data-theme="pokemon"] {
+  --border-color: hsl(46, 100%, 52%);
+  --text-color: hsl(43, 26%, 26%);
+}
+
+[data-theme="tamagotchi"] {
+  --border-color: hsl(352, 100%, 40%);
+  --text-color: hsl(352, 97%, 23%);
+}

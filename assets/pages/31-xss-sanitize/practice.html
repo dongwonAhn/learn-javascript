@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>크로스 사이트 스크립팅(XSS) & Sanitize</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+
+      [data-id="search-result"] {
+        ul {
+          &:empty + [data-info] {
+            display: block;
+          }
+        }
+
+        [data-info] {
+          display: none;
+        }
+      }
+    </style>
+    <script src="https://unpkg.com/dompurify/dist/purify.min.js"></script>
+  </head>
+
+  <body>
+
+    <div id="practice1">
+      <form data-id="add-comment-form">
+        <h3>댓글</h3>
+        <input type="text" name="name" placeholder="이름 입력" />
+        <textarea name="comment" placeholder="댓글 입력" rows="3"></textarea>
+        <button type="submit">댓글 작성</button>
+      </form>
+
+      <div data-id="comments">
+        <h4>댓글 목록</h4>
+      </div>
+    </div>
+
+    <script>
+      // 실습 1. 댓글 (XSS 문제 해결)
+      // 아래 작성된 코드는 사용자가 댓글 입력 창에 <img src="x" onerror="alert('XSS 공격 성공!')"> 
+      // 코드를 입력하고 실행하면 문제가 발생합니다. 문제가 발생하지 않도록 코드를 검토해 해결하세요.
+      ;(() => {
+        
+        const practice1 = document.getElementById('practice1')
+        const form = practice1.querySelector('[data-id="add-comment-form"]')
+        const comments = practice1.querySelector('[data-id="comments"]')
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault()
+          const { name, comment } = form.elements
+          const nameValue = name.value.trim()
+          const commentValue = comment.value.trim()
+          
+          if (nameValue && commentValue) {
+            const newComment = document.createElement('div')
+            newComment.innerHTML = DOMPurify.sanitize(`<p><strong>${nameValue}</strong> ${commentValue}</p>`)
+            console.log(newComment.innerHTML)
+            comments.appendChild(newComment)
+            form.reset()
+          }
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <div id="practice2">
+      <form data-id="search-form">
+        <input type="search" name="search" aria-label="검색" placeholder="검색어 입력" />
+        <button type="submit">검색</button>
+      </form>
+
+      <div data-id="search-result">
+        <h4>검색 결과</h4>
+        <ul> </ul>
+        <p data-info>검색 결과가 없습니다.</p>
+      </div>
+    </div>
+
+    <script>
+      // 실습 2. 검색 (XSS 문제 해결)
+      // 아래 작성된 마크업 코드를 사용해 사용자가 입력한 검색어가 검색 데이터에 포함된 경우, 
+      // 검색 내용을 화면에 표시하도록 JavaScript 코드를 작성합니다. 
+      // 검색 내용이 없으면 "검색 결과가 없습니다."를 화면에 표시합니다.
+      // 추가적으로 <iframe src=jAva&Tab;script:alert(3)><iframe> 코드가 
+      // 입력되더라도 안전하게 코드가 처리되도록 살균 처리하여 문제가 발생하지 않도록 구현합니다.
+      ;(() => {
+        
+        // 검색 데이터
+        const searchData = [
+          "JavaScript 프로그래밍 기초",
+          "HTML과 CSS 웹 디자인",
+          "React 컴포넌트 개발",
+          "Node.js 서버 구축",
+          "웹 보안과 XSS 방어"
+        ]
+
+        // 검색 폼 찾기
+        const searchForm = document.querySelector('[data-id="search-form"]')
+        const resultArea = document.querySelector('[data-id="search-result"]')
+        const resultList = resultArea.querySelector('ul')
+
+        // 검색 폼에 submit 이벤트 리스너 추가
+        searchForm.addEventListener('submit', (e) => {
+          e.preventDefault()
+          const form = e.currentTarget
+          // 입력된 검색어
+          const query = form.search.value.trim().toLowerCase()
+          
+          // 검색 데이터에서 입력 검색어가 포함된 항목 찾기
+          const searchedData = searchData.find((data) => data.toLowerCase().includes(query))
+          
+          // DOM 업데이트 (화면 변경)
+          if(searchedData) {
+            // 검색된 데이터가 있는 경우
+            const result = DOMPurify.sanitize(`<li>${searchedData}</li>`)
+            resultList.insertAdjacentHTML('beforeend', result)
+          } else {
+            // 검색 데이터가 없는 경우
+            resultList.innerHTML = ''
+          }
+
+          form.reset()
+        })
+
+      })()
+    </script>
+
+  </body>
+
+</html>

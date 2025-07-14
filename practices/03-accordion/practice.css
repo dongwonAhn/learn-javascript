@@ -1,0 +1,11 @@
+.faq__answer {
+  display: none;
+  padding: 1rem;
+  background-color: #eef5ff;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.faq__icon svg {
+  transition: transform 0.3s ease;
+}

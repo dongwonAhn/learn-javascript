@@ -1,0 +1,217 @@
+.todolist {
+  max-width: 35rem;
+  margin-inline: auto;
+}
+
+/* New Task ----------------------------------------------------------------- */
+
+.todolist__new-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--blue-gray-900);
+
+  & + * {
+    margin-top: 0.75rem;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    background-color: var(--blue-gray-400);
+    color: var(--blue-gray-900);
+    transition: background-color 0.2s var(--ease-in-sine);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--blue-gray-100);
+      color: var(--teal-900);
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:active {
+      scale: 0.97;
+      transition: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: var(--blue-gray-400);
+      color: var(--blue-gray-700);
+    }
+
+    & > * + * {
+      margin-left: 0.35rem;
+    }
+
+    & > svg {
+      width: 0.6rem;
+      height: 0.6rem;
+      fill: currentColor;
+    }
+  }
+}
+
+.new-task__input-group {
+  flex-grow: 1;
+  
+  label {
+    display: block;
+    margin-block-end: 4px;
+    margin-inline-start: 3px;
+    font-size: 0.75rem;
+    font-variant: small-caps;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    color: var(--blue-50);
+  }
+  
+  input[type="text"] {
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1;
+    border: 0;
+    border-block-end: 0.1px solid var(--blue-500);
+    padding-block-end: 4px;
+    background-color: transparent;
+    color: var(--blue-300);
+    width: 100%;
+    transition: border-block-end-color 0.3s var(--ease-in-out-sine);
+    
+    &::placeholder {
+      color: var(--blue-200);
+    }
+    
+    &:focus {
+      outline: none;
+      border-block-end-color: var(--blue-300);
+    }
+  }
+}
+
+
+/* Task List ---------------------------------------------------------------- */
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s var(--ease-in-out-sine);
+  
+  &:hover,
+  &:focus-within {
+    background-color: var(--white);
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+
+    & + label {
+      user-select: none;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.125rem;
+
+      .task__checkmark {
+        display: inline-grid;
+        place-items: center;
+        flex-shrink: 0;
+        height: 1.5rem;
+        width: 1.5rem;
+        border: 1px solid var(--blue-gray-600);
+        border-radius: 100%;
+        color: transparent;
+      }
+    }
+
+    &:checked + label {
+      color: var(--blue-gray-500);
+      text-decoration: line-through;
+
+      .task__checkmark {
+        border-color: var(--blue-gray-400);
+        background-color: var(--blue-gray-300);
+        color: var(--blue-gray-50);
+      }
+    }
+
+    &:focus + label,
+    &:active + label {
+      .task__checkmark {
+        box-shadow: 0 0 3px 3px var(--blue-gray-300);
+      }
+    }
+
+    & + label svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      fill: currentColor;
+    }
+  }
+}
+
+.task__delete-button {
+  opacity: 0;
+  margin-right: -0.5rem;
+  padding: 0.5rem;
+  line-height: 1;
+  border: 0;
+  transition: opacity 0.3s var(--ease-in-out-sine);
+  
+  .task:hover &,
+  &:focus,
+  &:active {
+    opacity: 1;
+    outline: none;
+  }
+
+  & svg {
+    color: var(--blue-gray-500);
+    fill: currentColor;
+    width: 1rem;
+    height: 1rem;
+    transition: color 0.3s var(--ease-in-out-sine);
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    svg {
+      color: var(--red-300);
+    }
+  }
+
+}
+
+.todolist__tasks {
+  & + .todolist__empty-state {
+    display: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background-color: var(--blue-gray-50);
+  }
+
+  &:empty + .todolist__empty-state {
+    display: block;
+  }
+}

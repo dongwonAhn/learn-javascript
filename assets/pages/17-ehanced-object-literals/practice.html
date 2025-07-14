@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>향상된 객체 리터럴</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+  <script>
+    ;(() => {
+      // -----------------------------------------------------------------
+      // 속성 할당 단축
+      // -----------------------------------------------------------------
+      // - 아래 변수들을 이용해 user 객체를 생성합니다.
+      // - 속성 이름은 name, age, location으로 하되 속성 할당 단축 구문을 사용합니다.
+      
+      const name = '민재'
+      const location = '부산'
+      const age = 25
+
+      // user 객체 생성 구문 작성
+      const minjae = { name, location, age }
+    
+      console.log(minjae.name) // '민재'
+      console.log(minjae.location) // '부산'
+      console.log(minjae.age) // 25
+    })
+
+    ;(() =>{
+      // -----------------------------------------------------------------
+      // 메서드 단축
+      // -----------------------------------------------------------------
+      // - user 객체를 생성하고, 메서드 단축 구문을 사용해 greet 메서드를 추가하세요.
+      // - greet 메서드는 "안녕하세요, 제 이름은 '세은'입니다."를 콘솔 패널에 출력합니다.
+
+      const user = {
+        name: '세은',
+        greet() {
+          console.log(`안녕하세요, 제 이름은 '${this.name}'입니다.`)
+        }
+      }
+      
+      user.greet() // "안녕하세요, 제 이름은 '세은'입니다."
+    })
+
+    ;(() => {
+      // -----------------------------------------------------------------
+      // 계산된 속성 이름
+      // -----------------------------------------------------------------
+      // - 변수 key에 저장된 값을 속성 이름으로 사용해 객체를 생성하세요.
+      // - 계산된 속성 구문을 활용하세요.
+      
+      let key = 'email'
+
+      const user = {
+        [key]: 'minjae@naver.com'
+      }
+
+      console.log(user.email) // 'minjae@naver.com'
+    })()
+  </script>
+</body>
+</html>

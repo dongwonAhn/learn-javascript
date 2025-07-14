@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>폼 소개</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- 
+      실습 1. 서버에서 처리하는 폼 
+      사용자로부터 이메일 주소를 입력 받아 제출하는 기본 폼을 작성합니다.
+      - 폼 필드 : 이메일
+      - 제출 버튼 : "구독"
+      - 서버에서 처리 : https://formspree.io/f/mzzgllld
+    -->
+    <section id="practice1">
+      <h2>서버에서 처리하는 폼</h2>
+
+      <form action="https://formspree.io/f/mzzgllld" method="POST" autocomplete="off">
+        <label for="subscribe-email">이메일</label>
+        <input
+          type="email"
+          id="subscribe-email"
+          name="email"
+          placeholder="user@company.io"
+          required
+        />
+        <button type="submit">구독</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <!-- 
+      실습 2. 클라이언트에서 처리하는 폼
+      사용자로부터 이메일 주소를 입력 받아 제출하는 기본 폼을 작성합니다.
+      - 폼 필드 : 이메일
+      - 제출 버튼 : "구독"
+      - 클라이언트에서 처리
+    -->
+    <section id="practice2">
+      <h2>클라이언트에서 처리하는 폼</h2>
+
+      <form autocomplete="off">
+        <label for="subscription-email">이메일</label>
+        <input
+          type="email"
+          id="subscription-email"
+          name="email"
+          placeholder="user@company.io"
+          required
+        />
+        <button type="submit">구독</button>
+      </form>
+    </section>
+
+    <script>
+      // 실습 2. 클라이언트에서 처리하는 폼
+      // - 콘솔 패널에 "입력한 이메일 {이메일주소}" 출력
+      // - 윈도우 alert 창으로 "{이메일주소} 구독이 완료되었습니다." 알림
+      ; (() => {
+        
+        const form = document.querySelector('#practice2 form')
+
+        form.addEventListener('submit', (e) => {
+          // 기본 작동 방지
+          e.preventDefault()
+
+          // 이벤트가 연결된 요소 (<form>) 찾기
+          const form = e.currentTarget
+          const email = form.email.value.trim()
+          console.log('입력한 이메일 = %s', email)
+          alert(`${email} 구독이 완료되었습니다.`)
+          
+          form.reset()
+        })
+
+      })()
+    </script>
+
+  </body>
+
+</html>

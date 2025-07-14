@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>매개변수 기본값</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  
+  <div id="practice2">
+    <form>
+      <div>
+        <label for="username">이름</label>
+        <input id="username" type="text" name="username" required />
+      </div>
+      <div>
+        <label for="usermail">이메일</label>
+        <input id="usermail" type="email" name="usermail" required />
+      </div>
+      <div>
+        <label for="userlocation">거주지</label>
+        <input id="userlocation" type="text" name="userlocation" value="서울" />
+      </div>
+      <button type="submit">생성</button>
+    </form>
+    
+    <table>
+      <caption>인명부</caption>
+      <thead>
+        <tr>
+          <th scope="col">이름</th>
+          <th scope="col">이메일</th>
+          <th scope="col">거주지</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{이름}</td>
+          <td>{이메일}</td>
+          <td>{거주지}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+
+  <script>
+    {
+      // ------------------------------------------------------------------------------
+      // 사용자 정보 생성
+      // ------------------------------------------------------------------------------
+      // 사용자 정보(이름, 이메일, 거주지)를 입력하고 생성 버튼을 누르면 화면의 인명부에 추가되되록 구현합니다.
+      // - 폼의 `submit` 이벤트를 리스닝하는 핸들러를 작성합니다.
+      // - createUser 함수를 작성해 활용합니다. (함수 매개변수 기본값 설정)
+      // - render 함수를 작성해 테이블의 `<tbody>` 요소를 업데이트합니다.
+
+      const practice = document.getElementById('practice2')
+      const form = practice.querySelector('form')
+      const table = practice.querySelector('table')
+      
+      form.addEventListener('submit', handleRenderTable)
+
+      function handleRenderTable(e) {
+        // 브라우저 기본 작동 방지
+        e.preventDefault()
+
+        // 폼 컨트롤 요소들을 수집
+        const formElements = e.currentTarget.elements
+        // 구조 분해 할당 수집된 요소들의 순서에 맞춰 분해된 요소를 변수에 할당
+        const [usernameInput, usermailInput, userlocationInput] = formElements
+        // 사용자가 입력한 값 읽기
+        const usernameValue = usernameInput.value.trim()
+        const usermailValue = usermailInput.value.trim()
+        const userlocationValue = userlocationInput.value.trim()
+        // 사용자가 입력한 값 확인
+        // console.log(usernameValue)
+        // console.log(usermailValue)
+        // console.log(userlocationValue)
+        // 새로운 사용자 생성
+        const newUser = createUser(usernameValue, usermailValue, userlocationValue)
+        
+        // 테이블 렌더링 (DOM 업데이트 -> 화면 변경)
+        render(newUser)
+
+        // 초기화
+        usernameInput.value = ''
+        usermailInput.value = ''
+        userlocationInput.value = '서울'
+      }
+
+      function render({ name, email, location }) {
+        const [nameCell, emailCell, locationCell] = table.querySelectorAll('tbody td')
+        
+        nameCell.textContent = name
+        emailCell.textContent = email
+        locationCell.textContent = location
+      }
+
+      function createUser(nameValue, emailValue, locationValue = '서울') {
+        const user = {
+          name: nameValue,
+          email: emailValue,
+          location: locationValue,
+        }
+
+        return user
+      }
+
+    }
+  </script>
+</body>
+</html>

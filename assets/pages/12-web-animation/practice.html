@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>웹 애니메이션 (CSS & JavaScript)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      --padding: 20px;
+
+      overflow-y: scroll;
+      padding: var(--padding);
+    }
+    
+    button {
+      cursor: pointer;
+      user-select: none;
+      margin-block-end: 60px;
+      padding: 0.6em 1em;
+      text-transform: uppercase;
+    }
+
+    section {
+      margin-block-end: 60px;
+
+      .is-transition & {
+        &:nth-of-type(1) .ball { transition-timing-function: cubic-bezier(0, 0, 1, 1); }
+        &:nth-of-type(2) .ball { transition-timing-function: ease; }
+        &:nth-of-type(3) .ball { transition-timing-function: ease-in; }
+        &:nth-of-type(4) .ball { transition-timing-function: ease-out; }
+        &:nth-of-type(5) .ball { transition-timing-function: cubic-bezier(0.48, 0, 0.52, 1); }
+      }
+
+      .is-animation & {
+        &:nth-of-type(1) .ball { animation-timing-function: linear; }
+        &:nth-of-type(2) .ball { animation-timing-function: ease; }
+        &:nth-of-type(3) .ball { animation-timing-function: ease-in; }
+        &:nth-of-type(4) .ball { animation-timing-function: ease-out; }
+        &:nth-of-type(5) .ball { animation-timing-function: ease-in-out; }
+      }
+
+      h2 {
+        font-weight: 400;
+        font-size: 20px;
+        color: #363538;
+      }
+
+      .ball {
+        --size: 40px;
+        --color: #443faf;
+        --radius: 100%;
+  
+        inline-size: var(--size);
+        block-size: var(--size);
+        background-color: var(--color);
+        border-radius: var(--radius);
+        
+        /* transtion-(property|duration|timing-function|delay) */
+        transition-property: translate;
+        transition-duration: 0.3s;
+
+        .is-transition & {
+          translate: calc(90vw - var(--size) - var(--padding)) 0;
+        }
+        
+        .is-animation & {
+          /* animation-(name|duration|timing-function|delay) */
+          animation-name: animateX;
+          animation-duration: 1s;
+          animation-timing-function: linear;
+          /* animation-(iteration-count|direction|fill-mode|play-state) */
+          animation-iteration-count: 2;
+          animation-direction: alternate; /* ping pong */
+          animation-fill-mode: forwards;
+          /* animation-play-state: paused; */
+          animation-play-state: running;
+        }
+      }
+    }
+
+    /* .rainbow {
+      animation: rainbow 6s alternate infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background: #ff004d; }
+      20% { background: #ff77ab; }
+      50% { background: #00e756; }
+      80% { background: #29adff; }
+      100% { background: #ff77ab; }
+    } */
+
+    @keyframes animateX {
+      0% { transform: translateX(0) }
+      100% { transform: translateX(80vw) }
+    }
+
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('button')
+      const main = document.querySelector('main')
+
+      // Web Animations API
+      const balls = main.querySelectorAll('.ball')
+      
+      balls.forEach((ball) => {
+          /* Element.animate() */
+          ball.animateObject = ball.animate(
+            /* keyframes */
+            [
+              // single keyframe
+              { 'backgroundColor': '#ff004d', offset: 0 },
+              { 'backgroundColor': '#ff77ab', offset: 0.2 },
+              { 'backgroundColor': '#00e756', offset: 0.5 },
+              { 'backgroundColor': '#29adff', offset: 0.8 },
+              { 'backgroundColor': '#ff77ab', offset: 1 },
+            ], 
+            // number (duration)
+            // 6000,
+            // options
+            {
+              duration: 6000, /* 6000ms = 6s */
+              direction: 'alternate',
+              iterations: Infinity
+            }
+          )
+        })
+
+
+      // 첫번째 볼 컨트롤
+      // 재생(play), 일시정지(pause)
+      const firstBall = balls.item(0)
+      const firstBallAnimation = firstBall.animateObject
+
+      firstBallAnimation.pause()
+
+      firstBall.addEventListener('click', () => {
+        firstBallAnimation.play()
+      })
+
+      
+
+
+      // CSS Transition Event Types
+
+      main.addEventListener('click', (e) => {
+        const mainElement = e.currentTarget
+
+        if (e.target.matches('[data-type="transition"]')) {
+          mainElement.classList.toggle('is-transition')
+        }
+        
+        if (e.target.matches('[data-type="animation"]')) {
+          let animationClassName = 'is-animation'
+          const button = e.target
+          if (mainElement.classList.contains(animationClassName)) {
+            mainElement.classList.remove(animationClassName)
+            button.textContent = 'Animation Play'
+          } else {
+            mainElement.classList.add(animationClassName)
+            button.textContent = 'Animation Paused'
+          }
+        }
+      })
+
+      main.addEventListener('transitionrun', (e) => {
+        console.log('transition "run"', e.propertyName, e.target)
+        e.target.style.setProperty('scale', '1 0.85')
+        e.target.style.setProperty('filter', 'blur(2px)')
+      })
+
+      main.addEventListener('transitionstart', (e) => {
+        console.log('transition "start"', e.propertyName, e.target)
+      })
+
+      main.addEventListener('transitionend', (e) => {
+        console.log('transition "end"', e.propertyName, e.target)
+        e.target.style.setProperty('scale', '1')
+        e.target.style.setProperty('filter', 'blur(0)')
+      })
+
+      main.addEventListener('transitioncancel', (e) => {
+        console.log('transition "cancel"', e.propertyName, e.target)
+      })
+
+      // CSS Animation Types
+
+      main.addEventListener('animationstart', (e) => {
+        console.log('animation "start"', e.animationName, e.target)
+      })
+
+      main.addEventListener('animationiteration', (e) => {
+        console.log('animation "iteration"', e.animationName, e.target)
+      })
+
+      main.addEventListener('animationend', (e) => {
+        console.log('animation "end"', e.animationName, e.target)
+      })
+
+      main.addEventListener('animationcancel', (e) => {
+        console.log('animation "cancel', e.animationName, e.target)
+      })
+
+    })
+  </script>
+</head>
+<body>
+
+  <main lang="en">
+
+    <button type="button" data-type="transition">Transition Toggle</button>
+    <button type="button" data-type="animation">Animation Play</button>
+
+    <section>
+      <h2>Linear</h2>
+      <div class="ball"></div>
+    </section>
+    <section>
+      <h2>Ease</h2>
+      <div class="ball"></div>
+    </section>
+    <section>
+      <h2>Ease in</h2>
+      <div class="ball"></div>
+    </section>
+    <section>
+      <h2>Ease out</h2>
+      <div class="ball"></div>
+    </section>
+    <section>
+      <h2>Ease in out</h2>
+      <div class="ball"></div>
+    </section>
+
+  </main>
+
+</body>
+</html>

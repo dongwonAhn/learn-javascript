@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>텍스트 및 HTML 변경</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+
+      .profile-card {
+        border: 1px solid #646464;
+        border-radius: 4px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <section id="practice1">
+      <h2>텍스트 메시지</h2>
+      <button type="button">메시지 변경</button>
+    </section>
+
+    <script>
+      // 실습 1. 텍스트 메시지 변경
+      // 사용자가 버튼을 클릭하면 제목 요소의 내용을 변경합니다.
+      ;(() => {
+        const headlines = [
+          '전자레인지에 금속 용기 사용 금지',
+          '생수병은 직사광선 피해서 보관하기',
+          '양치 후 30분 이내에는 커피 피하기',
+          '스마트폰은 잠들기 1시간 전 사용 자제',
+          '손 씻기는 30초 이상 꼼꼼히',
+          '냉장고에 뜨거운 음식 바로 넣지 않기',
+          '계란은 실온 보관보다 냉장 보관이 안전',
+          '채소는 흐르는 물에 충분히 세척',
+          '음식물 쓰레기는 물기 제거 후 버리기',
+          '비오는 날 우산은 완전히 말려서 보관',
+          '마스크는 1회용, 재사용 금지',
+          '신용카드 비밀번호는 타인과 공유 금지',
+          '가스레인지 사용 후 밸브 꼭 잠그기',
+          '운전 중 휴대전화 사용 자제',
+          '비상약은 유통기한 확인 후 복용',
+          '전기제품 플러그는 사용 후 뽑기',
+          '우유는 개봉 후 3일 이내 섭취 권장',
+          '화장실 문은 항상 닫아서 환기하기',
+          '세탁기는 세탁 후 문 열어두기',
+          '식사 전후 손 씻기 습관화',
+          '과일은 껍질째 먹기 전 깨끗이 세척',
+          '빨래는 햇볕에 충분히 말리기',
+          '컴퓨터 장시간 사용 시 1시간마다 스트레칭',
+          '냉동식품 해동은 냉장실에서 천천히',
+          '반려동물 산책 후 발 닦아주기',
+          '장기간 외출 시 수도, 가스 점검',
+          '쓰레기 분리수거는 정확하게',
+          '자동차 타이어 공기압 주기적 점검',
+          '운동 전 스트레칭 필수',
+          '식용유 재사용 자제',
+          '의약품은 어린이 손에 닿지 않는 곳에 보관',
+          '스마트폰 충전 중 과열 주의',
+          '침구류는 주기적으로 세탁',
+          '신선식품은 구입 후 바로 냉장보관',
+          '과음 후 충분한 수분 섭취',
+          '외출 후 손과 얼굴 깨끗이 씻기',
+          '겨울철 실내 적정 습도 유지',
+          '불필요한 전등은 끄고 다니기',
+          '공공장소에서는 이어폰 사용하기',
+          '비상연락망은 가족끼리 공유'
+        ]
+    
+        const practice = document.getElementById('practice1')
+        const headline = practice.querySelector('h2')
+        const button = headline.nextElementSibling
+
+        let index = 0
+        let lastIndex = headlines.length - 1
+
+        button.addEventListener('click', () => {
+          // 추가적으로 현재 코드는 버튼을 누를때마다 
+          // index가 1씩 증가하여 바로 다음줄의 제목이 출력되고있는데,
+          // sequencialOutput()
+          
+          // 실습 제목에 적혀있듯이 '랜덤' 으로 제목이 나오게 하는 방법도 있는지 궁금합니다!
+          randomOutput()
+        })
+
+        function randomOutput() {
+          // 랜덤 숫자(정수) 값을 생성하는 코드 작성
+          // 난수를 생성하는 방법
+          const randomIndex = Math.floor(headlines.length * Math.random())
+          console.log('randomIndex = %s', randomIndex)
+          headline.textContent = headlines[randomIndex]
+        }
+
+        function sequencialOutput() {
+          headline.textContent = index++ <= lastIndex 
+            ? headlines[index] 
+            : '더 이상 표시할 제목이 없습니다.'
+        }
+
+        button.click()
+
+      })()
+    </script>
+
+    <hr />
+
+    <div id="practice2">
+      <button type="button">카드 추가</button>
+      <div class="profile-card">{프로필 카드}</div>
+    </div>
+
+    <script>
+      // 실습 2. 카드 추가
+      // 사용자가 "카드 추가" 버튼을 클릭하면 
+      // 프로필 카드가 화면에 표시되도록 구현합니다.
+      ;(() => {
+
+        const practice = document.getElementById('practice2')
+        const card = practice.querySelector('.profile-card')
+        const button = card.previousElementSibling
+
+        button.addEventListener('click', () => {
+          const cardTemplate = `
+            <h2>박상현</h2>
+            <p>프론트엔드 개발자</p>
+          `
+          card.innerHTML = cardTemplate
+          // button.disabled = true
+        }, { once: true })
+
+        // button.click()
+        
+
+      })()
+    </script>
+
+  </body>
+
+</html>

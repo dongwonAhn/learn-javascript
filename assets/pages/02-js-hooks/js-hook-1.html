@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+	<head>
+	  <meta charset="UTF-8" />
+	  <title>요소 선택 실습</title>
+	</head>
+	<body>
+	
+	  <h1 id="main-title">안녕하세요!</h1>
+	  <p class="description">이것은 설명입니다.</p>
+	  <button type="button" data-role="confirm">확인</button>
+	  <button type="button" class="btn">클릭</button>
+	
+    <script>
+      {
+        // 1. `id` 속성으로 요소를 선택한 후, 콘솔에 출력합니다.
+        const mainTitle = document.getElementById('main-title')
+        // console.log(mainTitle)
+
+        // 2. `class` 속성으로 요소를 선택한 후, 콘솔에 출력합니다.
+        const hasClassAttributeElements = document.querySelectorAll('[class]')
+        // const hasClassAttributeElements = document.querySelectorAll('[class$=n]')
+        // const hasClassAttributeElements = document.querySelectorAll('[class*=t]')
+        // console.log(hasClassAttributeElements)
+
+        // 3. `button` 태그 이름으로 모든 요소를 선택한 후, 콘솔에 출력합니다.
+        const buttons = document.getElementsByTagName('button')
+        // console.log(buttons) // NodeList? HTMLCollection?
+
+        // 4. `data-role` 속성으로 요소를 선택한 후, 콘솔에 출력합니다.
+        console.log(document.querySelector('[data-role="confirm"]'))
+      }
+    </script>
+
+	</body>
+</html>

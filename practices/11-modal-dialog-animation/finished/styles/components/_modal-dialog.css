@@ -1,0 +1,89 @@
+.point-hand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-inline-size: 3em;
+  margin: 1em auto 0;
+  color: var(--modal-text-color);
+
+  animation: rising-up 1s var(--ease-out-back);
+}
+
+.modal-overlay {
+  .modal-is-open & {
+    opacity: 1;
+    z-index: 1000;
+    transition-delay: 0s; /* 0s, 0s */
+
+    .wave-hand {
+      transform-origin: center bottom;
+      animation: wave-hand 2s var(--ease-in-out-cubic);
+    }
+  }
+  
+  transition: opacity 0.3s var(--ease-in-out-cubic),
+              z-index 0s linear 0.3s;
+
+  opacity: 0;
+  z-index: -1;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  background-color: var(--modal-overlay-background-color);
+
+  .modal-dialog {
+    display: grid;
+    place-items: center;
+    position: relative;
+    border-radius: 4px;
+    background-color: var(--dialog-background-color);
+    box-shadow: 0 2px 4px 2px var(--modal-shadow-color);
+    color: var(--modal-text-color);
+    min-inline-size: 50vmin;
+    min-block-size: 50vmin;
+  }
+  
+  .modal-close-button {
+    .modal-dialog:hover & {
+      opacity: 1;
+    }
+
+    opacity: 0;
+    position: absolute;
+    top: -1.5em;
+    right: -1.5em;
+    padding: 1em 1em;
+    font-size: 0.6em;
+    border-radius: 50%;
+    border: 2px solid var(--dialog-close-button-background-color);
+    background-color: var(--dialog-close-button-background-color);
+    color: var(--dialog-close-button-color);
+    transition: background-color 0.3s var(--ease-out-sine),
+                border-color 0.3s var(--ease-out-sine);
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 1;
+      background-color: var(--dialog-close-button-hover-background-color);
+      border-color: var(--dialog-close-button-hover-background-color);
+    }
+  }
+}
+
+@keyframes rising-up {
+  from { translate: 0 60px; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
+}
+
+@keyframes wave-hand {
+  0% { scale: 0; opacity: 0; }
+  20% { scale: 1; opacity: 1; rotate: -15deg; }
+  40% { rotate: 15deg; }
+  60% { rotate: -15deg; }
+  80% { rotate: 15deg; }
+  100% { rotate: 0deg; }
+}

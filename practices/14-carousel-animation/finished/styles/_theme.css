@@ -1,0 +1,7 @@
+:root {
+  --background-color: light-dark(var(--white), var(--blue-gray-950));
+
+  --color-default-state: light-dark(var(--blue-gray-100), var(--blue-gray-800));
+  --color-hover-state: light-dark(var(--blue-gray-200), var(--blue-gray-600));
+  --color-selected-state: var(--blue-gray-500);
+}

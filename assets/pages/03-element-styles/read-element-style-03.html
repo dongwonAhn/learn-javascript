@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+	<head>
+	  <meta charset="UTF-8" />
+	  <title>가상 요소 스타일 읽기</title>
+	  <style>
+	    .quote {
+	      padding-left: 20px;
+	      position: relative;
+	      font-size: 1.2rem;
+	      color: #2c3e50;
+	
+	      &::before {
+		      content: "💬";
+		      position: absolute;
+		      left: 0;
+		    }
+	    }
+	  </style>
+	</head>
+	<body>
+	
+	  <p class="quote">이것은 가상 요소가 포함된 인용문입니다.</p>
+
+    <script>
+      {
+        // 가상 요소의 스타일 읽기
+        // getComputedStyle() 메서드를 사용해 가상 요소의 콘텐츠 값을 읽어 콘솔 패널에 출력합니다.
+
+        const quoteElement = document.querySelector('.quote')
+        const quoteBeforePseudoElementStyles = getComputedStyle(quoteElement, '::before')
+
+        console.log(quoteBeforePseudoElementStyles.content)
+        console.log(quoteBeforePseudoElementStyles.position)
+        console.log(quoteBeforePseudoElementStyles.left)
+        console.log(quoteBeforePseudoElementStyles.right)
+        // console.log(quoteBeforePseudoElementStyles.getPropertyValue('content'))
+        // console.log(quoteBeforePseudoElementStyles.getPropertyValue('position'))
+        // console.log(quoteBeforePseudoElementStyles.getPropertyValue('left'))
+        // console.log(quoteBeforePseudoElementStyles.getPropertyValue('right'))
+      }
+    </script>
+	</body>
+</html>

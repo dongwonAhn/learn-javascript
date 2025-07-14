@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>요소 위치와 크기 측정</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: #74b9ff;
+        margin: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <button id="measureBtn">위치/크기 확인</button>
+
+    <script>
+      {
+        // 버튼 클릭 시, 요소의 위치와 크기 확인
+        // 버튼을 클릭하면, .box 요소의 위치 및 크기 정보를 콘솔에 출력합니다.
+      }
+    </script>
+    <script>
+      {
+        // 버튼 클릭 시, 요소의 위치와 크기 확인
+        // 버튼을 클릭하면, .box 요소의 위치 및 크기 정보를 콘솔에 출력합니다.
+
+        // 수학 함수 (반올림 round)
+        function round(numberValue) {
+          return Math.round(numberValue);
+        }
+
+        const boxElement = document.querySelector(".box");
+
+        const button = document.getElementById("measureBtn");
+        button.addEventListener("click", () => {
+          const boxRectInfo = boxElement.getBoundingClientRect();
+          console.log(
+            "width=" + round(boxRectInfo.width),
+            "height=" + round(boxRectInfo.height)
+          );
+          console.log(
+            "top=" + round(boxRectInfo.top),
+            "y=" + round(boxRectInfo.y)
+          );
+          console.log(
+            "left=" + round(boxRectInfo.left),
+            "x=" + round(boxRectInfo.x)
+          );
+          console.log("right=" + round(boxRectInfo.right));
+          console.log("bottom=" + round(boxRectInfo.bottom));
+        });
+      }
+    </script>
+  </body>
+</html>

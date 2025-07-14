@@ -1,0 +1,77 @@
+:root {
+  --white: #fff;
+  --black: #000;
+  --gray-100: #d2d3d6;
+  --gray-200: #a5a7ad;
+  --gray-300: #787c85;
+  --gray-400: #4b505c;
+  --gray-500: #1e2433;
+  --gray-600: #181d29;
+  --gray-700: #12161f;
+  --gray-800: #0c0e14;
+  --gray-900: #06070a;
+  --red: #e13737;
+  --orange: #e17e37;
+  --yellow: #e1b137;
+  --yellowgreen: #dee137;
+  --green: #87e137;
+  --cyan: #37e19a;
+  --blue: #37bfe1;
+  --deepblue: #3745e1;
+  --purple: #5f37e1;
+  --violet: #dc37e1;
+  --pink: #e1377e;
+}
+
+body {
+  --padding: 20px;
+  --size: 50px;
+  --color: var(--pink);
+
+  overflow-y: scroll;
+  min-height: calc(100vh - var(--padding) * 2);
+  margin: 0;
+  padding: var(--padding);
+  background-color: var(--gray-500, #1e2433);
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--size, 50px);
+  min-height: inherit;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+  margin-block-end: 60px;
+  padding: 0.6em 1em;
+  text-transform: uppercase;
+}
+
+.box {
+  width: var(--size, 50px);
+  height: var(--size, 50px);
+  margin: 0;
+  background-color: var(--color, #e1377e);
+  border-radius: var(--radius, 4px);
+
+  &.red { --color: var(--red) }
+  &.orange { --color: var(--orange) }
+  &.yellow { --color: var(--yellow) }
+  &.yellowgreen { --color: var(--yellowgreen) }
+  &.green { --color: var(--green) }
+  &.cyan { --color: var(--cyan) }
+  &.blue { --color: var(--blue) }
+  &.deepblue { --color: var(--deepblue) }
+  &.purple { --color: var(--purple) }
+  &.violet { --color: var(--violet) }
+  &.pink { --color: var(--pink) }
+}
+
+
+.canvas {
+  border: 4px solid var(--white);
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>구조 분해 할당</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  
+  <div id="practice2">
+    <div class="location">
+      <strong>현재 위치</strong>
+      <p id="position">{ x: {위도}, y: {경도} }</p>
+    </div>
+    <table class="location-info">
+      <caption>사용자 위치 정보</caption>
+      <thead>
+        <tr>
+          <th scope="col">위도</th>
+          <th scope="col">경도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{위도 출력}</td>
+          <td>{경도 출력}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    {
+      // -------------------------------------------------------------------------
+      // 좌표를 활용한 위치 표시
+      // -------------------------------------------------------------------------
+      // 배열로 주어진 좌표에서 `x`, `y`를 구조 분해 할당으로 꺼내어 위치 정보를 DOM에 출력해 보세요.
+      
+      const coords = [270, 114] // [위도(latitude, 경도(longitude)]
+
+      const practice = document.getElementById('practice2')
+      const position = document.getElementById('position')
+      const table = practice.querySelector('.location-info')
+
+      // 구조 분해 할당
+      const [latitude, longitude] = coords
+      
+      // DOM 업데이트 (화면 변경)
+      position.textContent = `{ x: ${latitude}, y: ${longitude} }`
+
+      const [latitudeCell, longitudeCell] = table.querySelectorAll('td')
+      latitudeCell.textContent = latitude
+      longitudeCell.textContent = longitude
+      
+    }
+  </script>
+</body>
+</html>

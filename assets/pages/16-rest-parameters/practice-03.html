@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>나머지 매개변수 및 전개구문</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  
+  <div id="practice3">
+    <div>
+      <label for="name">이름</label>
+      <input id="name" type="text" placeholder="박한울" />
+    </div>
+    <div>
+      <label for="email">이메일</label>
+      <input id="email" type="email" placeholder="user@company.io" />
+    </div>
+    <button type="button">생성</button>
+    <output></output>
+  </div>
+
+  <script>
+    {
+      // ------------------------------------------------------------------------------
+      // 객체 전개
+      // ------------------------------------------------------------------------------
+      // 사용자가 입력한 정보를 기본 객체({ role: '게스트', active: false })와 병합해 출력합니다.
+      // - name, email 정보를 사용해 기본 객체와 병합된 새 객체를 생성합니다.
+      // - <output> 요소 콘텐츠로 객체를 문자화하여 출력합니다.
+
+      const practice = document.getElementById('practice3')
+
+      const userDefaultOptions = {
+        role: '게스트', 
+        active: false 
+      }
+      
+      practice.addEventListener('click', ({ target }) => {
+        if(!target.closest('button')) return
+
+        const name = document.getElementById('name').value.trim()
+        const email = document.getElementById('email').value.trim()
+
+        const newUser = { 
+          name,
+          email,
+          ...userDefaultOptions,
+        }
+
+        const newUserString = JSON.stringify(newUser)
+
+        practice.querySelector('output').value = newUserString
+
+      })
+      
+    }
+  </script>
+</body>
+</html>

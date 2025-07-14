@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <title>구조 분해 할당</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  
+  <div id="practice1">
+    <table class="user-info">
+      <caption>사용자 정보</caption>
+      <tbody>
+        <tr>
+          <th scope="row">이름</th>
+          <td>{이름 출력}</td>
+        </tr>
+        <tr>
+          <th scope="row">이메일</th>
+          <td>{이메일 출력}</td>
+        </tr>
+      </tbody>
+    </div>
+  </div>
+
+  <script>
+    {
+      // -------------------------------------------------------------
+      // 사용자 정보 출력하기
+      // -------------------------------------------------------------
+      // 객체에서 `name`, `email`을 구조 분해 할당으로 꺼내어 DOM에 출력해 보세요.
+      
+      // Data
+      const user = {
+        name: '지훈',
+        email: 'yamoo9@naver.com',
+      }
+
+      const practice = document.getElementById('practice1')
+      const table = practice.querySelector('.user-info')
+      const tableCellDatas = table.querySelectorAll('td') // NodeList
+      const [nameCell, emailCell] = tableCellDatas
+      
+      // user 구조 분해 할당
+      const { 
+        name: nameValue = 'user',
+        email: emailValue = 'user@example.com' 
+      } = user
+
+      // DOM 업데이트 (화면 변경)
+      nameCell.textContent = nameValue
+      emailCell.textContent = emailValue
+    
+    }
+  </script>
+</body>
+</html>

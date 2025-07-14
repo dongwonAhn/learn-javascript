@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>웹 애플리케이션 상태 관리</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      .counter-box {
+        border: 2px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+      }
+
+      .count {
+        font-size: 2em;
+        margin: 10px 0;
+        color: #2b80ff;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <section class="counter">
+      <h2>클릭 횟수</h2>
+      <button type="button">클릭 횟수 변경</button>
+      <output>0</output>
+    </section>
+
+    <script>
+      ;(() => {
+        // 재할당 / 뮤테이션(변형) 최소화
+        
+        // 상태 선언
+        // 객체 타입으로 상태 관리
+        const state = {
+          count: 0
+        }
+
+        console.log(`초기 상태`, state)
+
+        const counter = document.querySelector('.counter')
+        const button = document.querySelector('button')
+        const output = counter.querySelector('output')
+
+        // 클릭 이벤트 리스닝
+        button.addEventListener('click', () => {
+          // 상태 업데이트
+          // state.count += 1
+          state.count++
+          console.log(`상태 변경`, state)
+
+          // DOM 업데이트
+          console.log('DOM 업데이트 전:', output.value)
+          output.value = state.count
+          console.log('DOM 업데이트 후:', output.value)
+        })
+
+      })()
+
+      ;(() => {
+        // 클릭 횟수 변경 버튼을 사용자가 클릭할 때마다 
+        // 화면에 클릭 횟수를 업데이트하도록 구현합니다.
+        // 
+        // 1. 상태(스코프 변수) 선언
+        // 2. 버튼 클릭 시, 상태 변경
+        // 3. 변경된 상태를 DOM에 반영
+        // 4. 재할당 또는 뮤테이션 최소화
+
+        // 기본 타입 숫자로 상태 관리
+        let clickedCount = 0
+
+        console.log(`초기 상태 = ${clickedCount}`)
+
+        // 버튼 클릭 시, 상태 변경
+        const counter = document.querySelector('.counter')
+        const output = counter.querySelector('output')
+        
+        counter.querySelector('button')
+          .addEventListener('click', () => {
+            // 상태 업데이트
+            clickedCount = clickedCount + 1
+            // 업데이트 된 상태 로그
+            console.log(`업데이트 된 상태 = ${clickedCount}`)
+            // 변경된 상태를 DOM에 반영
+            output.value = clickedCount
+          })
+      })
+    </script>
+
+  </body>
+
+</html>

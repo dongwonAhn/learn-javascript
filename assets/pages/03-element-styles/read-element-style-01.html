@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+	<head>
+	  <meta charset="UTF-8" />
+	  <title>인라인 스타일 읽기</title>
+	</head>
+	<body>
+	  
+	  <p class="element" style="color: #e74c3c; font-size: 24px;">
+	    이 단락은 인라인 스타일을 가지고 있습니다.
+	  </p>
+	
+    <script>
+      {
+        // 인라인 스타일 읽기
+        // 인라인 스타일로 설정된 글자색, 글자 크기를 JavaScript로 읽어 콘솔 패널에 출력합니다.
+        const element = document.querySelector('.element')
+        const elementStyles = {
+          // fontSize: element.style.fontSize,
+          fontSize: element.style.getPropertyValue('font-size'),
+          // color: element.style.color,
+          color: element.style.getPropertyValue('color'),
+        }
+
+        console.table(elementStyles)
+      }
+    </script>
+	</body>
+</html>

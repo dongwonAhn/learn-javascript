@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <title>DOM에 여러 요소 추가</title>
+    <style>
+      [id^="practice"] {
+        display: flex;
+        flex-flow: column;
+        align-items: start;
+        gap: 12px;
+        padding: 12px;
+
+        * {
+          margin-block: 0;
+        }
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      hr {
+        margin-block: 20px;
+        margin-inline: 12px;
+        border: 0;
+        border-block-end: 1px solid #aaa;
+      }
+
+      .user-list, .menu, .comments {
+        list-style-type: '';
+        padding-inline-start: 0;
+        display: grid;
+        gap: 8px;
+        inline-size: calc(100vw - 64px);
+
+        > * {
+          inline-size: inherit;
+          border: 1px solid #444;
+          border-radius: 4px;
+          padding: 0.5rem;
+          font-size: 14px;
+        }
+
+        &:empty + .info {
+          display: block;
+        }
+      }
+
+      .info {
+        display: none;
+        inline-size: calc(100vw - 60px);
+        margin: 0;
+        border: 1px solid hsl(186 84% 35%);
+        background-color: hsla(186 84% 35% / 5%);
+        border-radius: 4px;
+        padding: 0.5rem;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="practice1">
+      <form>
+        <input type="text" aria-label="사용자 이름" placeholder="사용자 이름" />
+        <button type="submit">추가</button>
+      </form>
+      <ul class="user-list"></ul>
+      <p class="info">📌 사용자 이름을 추가해보세요.</p>
+    </div>
+
+    <script>
+      // 실습 1. 사용자 추가
+      // 사용자가 이름 입력 후, "추가" 버튼을 누르면 
+      // 목록 요소에 새 사용자가 추가되도록 구현합니다.
+      // .append() 또는 .appendChild() 메서드 사용
+      ; (() => {
+        // 사용자 참고
+        const users = [
+          {
+            name: "김민수",
+            age: 28,
+            job: "웹개발자",
+            hobby: "등산",
+            email: "minsoo.kim@example.com",
+            phone: "010-1234-5678"
+          },
+          {
+            name: "이수진",
+            age: 32,
+            job: "디자이너",
+            hobby: "사진찍기",
+            email: "soojin.lee@example.com",
+            phone: "010-2345-6789"
+          },
+          {
+            name: "박지훈",
+            age: 24,
+            job: "대학생",
+            hobby: "게임",
+            email: "jihun.park@example.com",
+            phone: "010-3456-7890"
+          },
+          {
+            name: "최유리",
+            age: 29,
+            job: "마케터",
+            hobby: "요리",
+            email: "yuri.choi@example.com",
+            phone: "010-4567-8901"
+          },
+          {
+            name: "정우성",
+            age: 35,
+            job: "교사",
+            hobby: "독서",
+            email: "woosung.jung@example.com",
+            phone: "010-5678-9012"
+          },
+          {
+            name: "한지민",
+            age: 27,
+            job: "간호사",
+            hobby: "영화감상",
+            email: "jimin.han@example.com",
+            phone: "010-6789-0123"
+          },
+          {
+            name: "오세훈",
+            age: 31,
+            job: "회계사",
+            hobby: "골프",
+            email: "sehoon.oh@example.com",
+            phone: "010-7890-1234"
+          },
+          {
+            name: "유나영",
+            age: 26,
+            job: "바리스타",
+            hobby: "베이킹",
+            email: "nayoung.yoo@example.com",
+            phone: "010-8901-2345"
+          },
+          {
+            name: "장동건",
+            age: 38,
+            job: "영업사원",
+            hobby: "자전거타기",
+            email: "donggun.jang@example.com",
+            phone: "010-9012-3456"
+          },
+          {
+            name: "서지수",
+            age: 23,
+            job: "학생",
+            hobby: "음악감상",
+            email: "jisu.seo@example.com",
+            phone: "010-0123-4567"
+          }
+        ]
+
+        // DocumentFragment 객체 활용
+        // 문서 객체 생성
+        const _dom = document.createDocumentFragment()
+        const container = document.createElement('div')
+        _dom.append(container)
+        
+        // users 데이터 순환
+        for (const { name } of users) {
+          container.insertAdjacentHTML('beforeend', `<li>${name}</li>`)
+        }
+
+        const practice = document.getElementById('practice1')
+        const userList = practice.querySelector('.user-list')
+        const form = practice.querySelector('form')
+
+        // 렌더링
+        userList.append(...container.children)
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault()
+          const [nameInput] = form.elements
+          const username = nameInput.value.trim()
+          if (!username) return
+          const userItem = document.createElement('li')
+          userItem.textContent = username
+          userList.appendChild(userItem)
+          nameInput.value = ''
+          nameInput.focus()
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <div id="practice2">
+      <button type="button">오늘의 메뉴 불러오기</button>
+      <ul class="menu"></ul>
+      <p class="info">📌 오늘의 메뉴를 불러오세요.</p>
+    </div>
+
+    <script>
+      // 실습 2. 메뉴 목록 렌더링
+      // 사용자가 "오늘의 메뉴 불러오기" 버튼을 누르면 목록이 한 번에 출력되어야 합니다. 
+      // - `todaysMenu` 배열을 순환해 HTML 문자열 생성
+      // - 생성된 HTML 문자열을 요소의 `.innerHTML` 속성으로 설정
+      ; (() => {
+        const todaysMenu = [
+          {
+            name: '김치찌개',
+            price: 9000,
+            ingredients: ['김치', '돼지고기', '두부', '대파', '양파', '고춧가루']
+          },
+          {
+            name: '된장찌개',
+            price: 8000,
+            ingredients: ['된장', '두부', '애호박', '감자', '양파', '버섯']
+          },
+          {
+            name: '비빔밥',
+            price: 9500,
+            ingredients: ['쌀밥', '나물', '고추장', '계란', '참기름', '소고기']
+          },
+          {
+            name: '불고기',
+            price: 12000,
+            ingredients: ['소고기', '양파', '간장', '설탕', '마늘', '대파']
+          },
+          {
+            name: '제육볶음',
+            price: 10000,
+            ingredients: ['돼지고기', '고추장', '양파', '대파', '마늘', '고춧가루']
+          },
+          {
+            name: '갈비탕',
+            price: 13000,
+            ingredients: ['소갈비', '무', '대파', '마늘', '당면', '후추']
+          },
+          {
+            name: '잡채',
+            price: 9000,
+            ingredients: ['당면', '소고기', '시금치', '당근', '양파', '버섯']
+          },
+          {
+            name: '닭갈비',
+            price: 11000,
+            ingredients: ['닭고기', '고추장', '양배추', '고구마', '떡', '양파']
+          },
+          {
+            name: '칼국수',
+            price: 8500,
+            ingredients: ['밀가루면', '멸치육수', '호박', '당근', '조개', '파']
+          },
+          {
+            name: '떡볶이',
+            price: 7000,
+            ingredients: ['떡', '고추장', '어묵', '양파', '대파', '설탕']
+          },
+          {
+            name: '짜장면',
+            price: 7500,
+            ingredients: ['춘장', '면', '단무지', '양파', '설탕']
+          }
+        ]
+
+        const practice = document.getElementById('practice2')
+        const button = practice.querySelector('button')
+        const menu = practice.querySelector('.menu')
+
+        const menuItemsTemplate = todaysMenu.reduce((acc, { name, price, ingredients }) => {
+          return acc + /* html */`
+            <li>
+              <h3>${name}</h3>
+              <p>
+                <span class="price">${price.toLocaleString()}원</span>
+                <span class="divider" role="none">|</span>
+                <span class="ingredients">(${ingredients.join(' / ')})</span>
+              </p>
+            </li>
+          `
+        }, '')
+
+        button.addEventListener('click', () => {
+          menu.innerHTML = menuItemsTemplate
+        })
+
+      })()
+    </script>
+
+    <hr />
+
+    <section id="practice3">
+      <h3>상품 리뷰</h3>
+      <button type="button">리뷰 불러오기</button>
+      <ul class="comments">
+        <li>배송도 빠르고 포장도 꼼꼼했어요. 맛도 기대 이상입니다!</li>
+        <li>양이 많고 간도 딱 좋네요. 가족끼리 먹기 좋아요.</li>
+        <li>전자레인지에 돌려 먹으니 금방 완성돼서 간편했어요.</li>
+        <li>조금 짜긴 한데 밥이랑 먹으면 괜찮아요. 재구매 의사 있어요.</li>
+        <li>기대보다 평범했지만 가격 대비 나쁘지 않았습니다.</li>
+        <li>아이들도 잘 먹어서 만족! 반찬 걱정 덜었네요.</li>
+      </ul>
+    </section>
+
+    <script>
+      // 실습 3. 리뷰 목록 추가
+      // "리뷰 불러오기" 버튼을 누르면 
+      // 리뷰 목록 요소에 여러 리뷰가 추가되도록 구현합니다.
+      // - 이미 있는 리뷰 글 위에, 여러 리뷰 글을 효과적으로 추가
+      // - DOM 조작 성능을 고려해 DocumentFragment 객체 활용
+      ; (() => {
+        const newReviews = [
+          {
+            author: "김민수",
+            date: "2025-07-08",
+            content: "생각보다 매콤해서 입맛에 딱 맞아요. 술안주로도 최고예요!",
+            likes: 12
+          },
+          {
+            author: "이수진",
+            date: "2025-07-07",
+            content: "냉동이라 큰 기대 안 했는데 식감도 괜찮고 맛있었어요.",
+            likes: 8
+          },
+          {
+            author: "박지훈",
+            date: "2025-07-06",
+            content: "양념이 진해서 밥반찬으로 딱이에요. 다음엔 2팩 주문하려고요.",
+            likes: 15
+          },
+          {
+            author: "최유리",
+            date: "2025-07-05",
+            content: "조리법이 간단해서 자취생에게 강추합니다!",
+            likes: 10
+          }
+        ]
+
+        const reviews = newReviews.map(({ content }) => {
+          const element = document.createElement('li')
+          element.textContent = content
+          return element
+        })
+
+        const fragment = document.createDocumentFragment()
+        fragment.append(...reviews) // fragment { children: [li, li, li, li] }
+
+        const button = document.querySelector('#practice3 button')
+
+        button.addEventListener('click', (e) => {
+          const button = e.currentTarget
+          const comments = button.nextElementSibling // ul.comments
+          comments.prepend(...fragment.children)
+        })
+
+      })()
+    </script>
+
+  </body>
+
+</html>
