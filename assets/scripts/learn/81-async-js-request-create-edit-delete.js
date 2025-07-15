@@ -55,10 +55,10 @@
       // .finally(() => console.log('요청 종료'))
   }
 
-})
+})()
 
 
-// XMLHttpRequest (Old)
+// XMLHttpRequest (Legacy)
 ;(() => {
   
   // 상품 생성
@@ -94,4 +94,4 @@
     xhr.addEventListener('load', responseCallback)
   }
 
-})()
+})
