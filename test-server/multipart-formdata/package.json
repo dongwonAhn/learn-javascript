@@ -1,0 +1,10 @@
+{
+  "name": "multipart-formdata-test-server",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.1"
+  }
+}
