@@ -17,349 +17,64 @@
 
     <h1>JavaScript</h1>
 
-    <main hidden>
-
-      <div class="demo">
-        <form autocomplete="off" novalidate>
-          <input type="search" name="search" aria-label="검색" />
-          <select name="category" aria-label="카테고리">
-            <option value="">모든 상품</option>
-            <option value="hats">모자</option>
-            <option value="sneakers">신발</option>
-            <option value="jackets">자켓</option>
-            <option value="mens">남성 의류</option>
-            <option value="womens">여성 의류</option>
-          </select>
-          <button type="submit">검색</button>
-        </form>
-        <p>총 <span class="products-count">{000}</span>개의 상품을 찾았습니다.</p>
-        <div
-          hidden
-          role="status"
-          style="color: #073037; font-weight: 700; font-size: 1.45rem;"
-        >
-          데이터 로딩 중입니다...
-        </div>
-        <ul class="products" style="display: grid; grid-template-columns: repeat(4, 1fr);">
-          <li>{데이터 기반 리스트 렌더링}</li>
-        </ul>
-        <div
-          role="alert"
-          style="color: #db172b; font-weight: 700; font-size: 1.45rem;"
-          hidden
-        >
-          {오류 메시지 출력}
-        </div>
+    <form 
+      hidden
+      method="POST"
+      action="http://localhost:4000/submit"
+      enctype="application/x-www-form-urlencoded"
+    >
+      <div>
+        <label for="name">이름</label>
+        <input type="text" name="name" id="name" value="yamoo9" />
       </div>
+      <div>
+        <label for="email">이메일</label>
+        <input type="email" name="email" id="email" value="yamoo9@naver.com" />
+      </div>
+      <div>
+        <label for="password">패스워드</label>
+        <input type="password" name="password" id="password" value="qwerty" />
+      </div>
+      <button type="submit">보내기</button>
+    </form>
 
-      <h2>사용자의 GitHub 저장소 목록</h2>
-      <ul class="repos-list">
-        <li>데이터를 로딩 중입니다...</li>
-      </ul>
+    <script>
+      const form = document.querySelector('form')
 
-      <input type="search" placeholder="검색어" />
+      // CORS: 다른 출처(사이트)에서 서버의 리소스 공유하는 것을 막는다.
+      // CORS 허용 (클라이언트 앱 -> API 서버)
 
-      <form style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px">
-        <label for="text">텍스트</label>
-        <textarea id="text" name="text" cols="40" rows="6"></textarea>
-        <button type="submit">출력</button>
-      </form>
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
 
-      <output></output>
+        const form = e.currentTarget
+        const url = form.action
+        const method = form.method
 
-      <form class="form">
-        <p>어떤 과일을 좋아하세요? (하나만 체크 가능)</p>
-        <div class="radio-button">
-          <input type="radio" name="favorite-fruit" id="apple" value="사과" />
-          <label for="apple">🍎 사과</label>
-        </div>
-        <div class="radio-button">
-          <input type="radio" name="favorite-fruit" id="grape" value="포도" checked />
-          <label for="grape">🍇 포도</label>
-        </div>
-        <div class="radio-button">
-          <input type="radio" name="favorite-fruit" id="lemon" value="레몬" />
-          <label for="lemon">🍋 레몬</label>
-        </div>
-        <div class="radio-button">
-          <input type="radio" name="favorite-fruit" id="none" value="없음" />
-          <label for="none">😝 없음</label>
-        </div>
+        const [ nameInput, emailInput, passwordInput ] = form.elements
 
-        <div class="textarea" style="display: flex; flex-direction: column; gap: 8px; margin-block: 20px;">
-          <label for="comment">댓글</label>
-          <textarea
-            id="comment"
-            name="comment"
-            placeholder="댓글을 작성해주세요."
-            cols="30"
-            rows="5"></textarea>
-        </div>
-      </form>
+        const name = nameInput.value.trim()
+        const email = emailInput.value.trim()
+        const password = passwordInput.value.trim()
 
-      <!-- <form class="form">
-        <p>어떤 과일을 좋아하세요?</p>
-        <div class="checkbox">
-          <input type="checkbox" name="apple" id="apple" value="사과" checked />
-          <label for="apple">🍎 사과</label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" name="grape" id="grape" />
-          <label for="grape">🍇 포도</label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" name="lemon" id="lemon" checked />
-          <label for="lemon">🍋 레몬</label>
-        </div>
-      </form> -->
+        const requestBody = new URLSearchParams({ name, email, password }).toString()
 
-      <!-- <form action="/subscribe" method="POST">
-        <div>
-          <label for="email">이메일</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="user@example.com"
-          />
-        </div>
-        <div>
-          <label for="contents">콘텐츠</label>
-          <input
-            type="text"
-            name="contents"
-            id="contents"
-            placeholder="구독 메시지"
-          />
-        </div>
-        <button type="submit">구독</button>
-      </form> -->
-
-      <script>
-        const form = document.querySelector('form')
-
-        form.addEventListener('submit', (e) => {
-          e.preventDefault()
-
-          const form = e.currentTarget
-
-          // 폼 요소 순환
-
-          // 방법 1.
-          // for (const element of form.elements) {
-          //   console.log(element)
-          // }
-
-          // 방법 2.
-          // Array.from(form.elements).forEach((element) => console.log(element))
-          // const formElements = [...form.elements]
-          // formElements.forEach((element) => console.log(element))
-
-          // 폼 요소 찾는 다양한 방법
-          // console.log(form.email.value)
-          // console.log(form.contents.value)
-
-          // console.log(form.elements)
-          // console.log(form.elements[0])
-          // console.log(form.elements.email)
-          // console.log(form.elements[1])
-          // console.log(form.elements.contents)
-          // console.log(form.elements[2])
-          // console.log(form.querySelector('button[type="submit"]'))
+        // fetch()
+        fetch(url, {
+          method,
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          body: requestBody
         })
-      </script>
+          .then((response) => response.json())
+          .then(console.log)
 
-      <section>
-        <h2>실습</h2>
-      </section>
-
-      <!-- beforebegin : before() -->
-      <h1 style="display: flex">
-        <!-- afterbegin : prepend() -->
-        JavaScript
-        <!-- beforeend : append() -->
-      </h1>
-      <!-- afterend : after() -->
-
-      <article>
-        <h2>라면 끓이는 방법</h2>
-        <ol class="ramen-cooking-recipe">
-          <li>기준선</li>
-        </ol>
-      </article>
-
-      <article>
-        <h2>라면 끓이는 방법</h2>
-        <!-- before -->
-        <ol class="ramen-cooking-recipe">
-          <!-- prepend -->
-          <li>면이 익으면 불을 끄고 그릇에 옮깁니다.</li>
-          <li>물을 냄비에 붓고 끓입니다 (약 500ml).</li>
-          <li>물이 끓으면 스프를 먼저 넣습니다.</li>
-          <li>취향에 따라 파, 계란, 치즈 등을 추가합니다.</li>
-          <li>호호 불며 맛있게 먹습니다.</li>
-          <!-- append -->
-        </ol>
-        <!-- after -->
-      </article>
-
-      <button type="button">위치 변경</button>
-      <div style="display: flex; justify-content: space-between; gap: 20px;">
-        <ol class="fruits-i-like">
-          <li>바나나</li>
-          <li>파인애플</li>
-          <li>오렌지</li>
-        </ol>
-        <ol class="fruits-i-dont-like">
-          <li>스트로베리</li>
-        </ol>
-      </div>
-
-      <div class="parent" style="display: flex; flex-direction: column; gap: 0.5rem;">
-        <span>자식 1</span>
-        <span>자식 2</span>
-      </div>
-
-      <nav>
-        <ul>
-          <li>
-            <a href="">하나</a>
-          </li>
-          <li>
-            <a href="">둘</a>
-          </li>
-          <li>
-            <a href="">셋</a>
-          </li>
-        </ul>
-      </nav>
-
-      <ul id="fruitList"></ul>
-      <p style="margin-block: 0; font-size: 2rem">JavaScript is Awesome!</p>
-
-      <h1 id="static">
-        <a
-          href="https://developer.mozilla.org/ko/docs/Web/JavaScript"
-          rel="noopener noreferrer"
-          target="_blank"
-          lang="en">
-          JavaScript
-        </a>
-      </h1>
-
-      <p lang="en" style="font-size: 20px">Web Programming Language</p>
-
-      <!-- Default Parameters -->
-      <header data-index="1">
-        <button type="button">button in header 1</button>
-      </header>
-
-      <header data-index="2">
-        <button type="button">button in header 2</button>
-      </header>
-
-      <div id="contoller" role="group" style="display: flex; gap: 4px; margin-block: 12px;">
-        <button type="button" data-role="add-event">이벤트 추가</button>
-        <button type="button" data-role="remove-event">이벤트 제거</button>
-        <button type="button" data-role="tester">이벤트 추가 대기중...</button>
-        <button type="button" data-role="once-event">1회만 이벤트 설정</button>
-      </div>
-
-      <!-- Template Literals -->
-      <div class="practice">
-        <form>
-          <div>
-            <label for="username">이름</label>
-            <input id="username" type="text" placeholder="이름을 입력하세요." />
-          </div>
-          <div>
-            <label for="meal">식사</label>
-            <select id="meal">
-              <option>식사 종류</option>
-              <option value="breakfast">아침</option>
-              <option value="lunch">점심</option>
-              <option value="dinner">저녁</option>
-            </select>
-          </div>
-          <button type="button">인사하기</button>
-        </form>
-        <p>인사말 출력</p>
-      </div>
-
-      <!-- Early Return -->
-      <div class="practice1" style="display: flex; flex-direction: column; gap: 20px;">
-        <form>
-          <div>
-            <label for="username">이름</label>
-            <input id="username" name="username" placeholder="이름을 입력하세요" />
-          </div>
-          <button type="submit">확인</button>
-        </form>
-        <output>결과 출력</output>
-      </div>
-
-      <div class="practice2" style="display: flex; flex-direction: column; gap: 20px;">
-        <input type="number" min="0" max="100" value="50" step="5" aria-label="점수" placeholder="점수를 입력하세요" />
-        <button type="button">등급 확인</button>
-        <output>등급 출력</output>
-      </div>
-
-      <div class="practice2" style="display: flex; flex-direction: column; gap: 20px;">
-        <input type="number" aria-label="점수" placeholder="점수를 입력하세요" />
-        <button type="button">등급 확인</button>
-        <output>등급 출력</output>
-      </div>
-
-      <!-- GSAP -->
-      <div class="ball"></div>
-
-      <!-- Event Delegation -->
-      <div class="box box1">
-        <span>박스 1</span>
-        <div class="box box2">
-          <span>박스 2</span>
-          <div class="box box3">
-            <span>박스 3</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add/Remove Event Listener -->
-      <div role="group" style="display: flex; gap: 4px; margin-block: 12px;">
-        <button type="button" data-role="add-event">이벤트 추가</button>
-        <button type="button" data-role="remove-event">이벤트 제거</button>
-        <button type="button" data-role="tester">이벤트 추가 대기중...</button>
-        <button type="button" data-role="once-event">1회만 이벤트 설정</button>
-      </div>
-
-      <!-- Event Loop -->
-      <ul class="link-list">
-        <li>
-          <a href="/news">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24" height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M15 18h-5" />
-              <path d="M18 14h-8" />
-              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" />
-              <rect width="8" height="4" x="10" y="6" rx="1" />
-            </svg>
-            <span>최신 뉴스 보기</span>
-          </a>
-        </li>
-        <li><a href="/tutorials">📘 튜토리얼 모음</a></li>
-        <li><a href="/community">💬 커뮤니티 참여</a></li>
-        <li><a href="/resources">📁 개발 자료실</a></li>
-        <li><a href="/contact">📮 문의하기</a></li>
-      </ul>
-
-    </main>
+        // XMLHttpRequest
+        
+      })
+    </script>
+    
   </body>
 
 </html>
