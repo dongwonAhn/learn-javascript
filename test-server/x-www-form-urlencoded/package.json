@@ -1,0 +1,9 @@
+{
+  "name": "x-www-form-urlencoded-test-server",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "devDependencies": {
+    "express": "^5.1.0"
+  }
+}
