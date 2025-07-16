@@ -149,10 +149,60 @@ const API_ENDPOINT = 'https://jsonip.com'
       headers: { 'Content-Type': 'application/json' },
       ...config
     })
-      .then((response) => response.json().then((responseData) => {
-        if (!response.ok) return Promise.reject(new Error(responseData.message))
-        return responseData
-      }))
+      .then((response) => {
+        const contentType = response.headers.get('content-type')
+        let methodName = 'text'
+
+        if (contentType.includes('application/json')) {
+          methodName = 'json'
+        } 
+        
+        if (
+          contentType.includes('image/') || 
+          contentType.includes('application/octet-stream')
+        ) {
+          methodName = 'blob'
+        }
+        
+        const resposeDataPromise = response[methodName]()
+
+        resposeDataPromise.then((responseData) => {
+          // 거절
+          if (!response.ok) return Promise.reject(new Error(responseData.message))
+          // 이행
+          return responseData
+        })
+
+        return resposeDataPromise
+      })
   }
-  
+
+  const euid = {
+    get(url) {
+      return fetchByProxy(url)
+    },
+    post(url, data, config) {
+      return fetchByProxy(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        ...config
+      })
+    },
+    put() {
+
+    },
+    patch() {
+
+    },
+    delete() {
+
+    }
+  }
+
+  // 객체 동결(freezing)
+  Object.freeze(euid)
+
+  globalThis.euid = euid
+
+
 })()
