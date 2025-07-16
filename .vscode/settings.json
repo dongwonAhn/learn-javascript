@@ -1,3 +1,29 @@
 {
-  "liveServer.settings.port": 5501
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          "comment"
+        ],
+        "settings": {
+          "fontStyle": "",
+          "foreground": "#939395"
+        }
+      },
+      {
+        "scope": [
+          "entity.other.inherited-class",
+          "entity.other.attribute-name",
+          "variable.parameter",
+          "variable.language",
+          "storage.modifier",
+          "storage.type"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ]
+  },
+  "postman.settings.dotenv-detection-notification-visibility": false,
 }
