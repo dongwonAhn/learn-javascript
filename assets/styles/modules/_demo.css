@@ -13,6 +13,63 @@ body {
   }
 }
 
+[data-id="upload-form"] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .thumbnails {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-block: 12px;
+
+    img {
+      border: 0.1px solid #111;
+    }
+  }
+
+  button {
+    cursor: pointer;
+    border: 0;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 14px;
+    background: rgba(0 0 0 / 0.8);
+    color: #fff;
+
+    &:hover {
+      background: rgba(0 0 0 / 1);
+    }
+  }
+}
+
+.sr-only {
+  overflow: hidden;
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: circle(0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  white-space: nowrap;
+
+  caption& {
+    position: static;
+  }
+  
+  &.focusable:focus {
+    overflow: initial;
+    position: static;
+    clip: auto;
+    clip-path: unset;
+    width: initial;
+    height: initial;
+    margin: initial;
+    white-space: initial;
+  }
+}
+
 .clickable {
   user-select: none;
   cursor: pointer;
@@ -35,7 +92,7 @@ h1 {
   font-size: var(--font-size, 2.65rem);
 
   &::before {
-    content: "🌈 ";
+    content: '🌈 '
   }
 }
 
@@ -94,22 +151,16 @@ h1 {
   border: 4px solid var(--black);
   padding: 20px;
 
-  &.box1 {
-    background-color: #4b3cf4;
-  }
-  &.box2 {
-    background-color: #00e183;
-  }
-  &.box3 {
-    background-color: #e1005a;
-  }
+  &.box1 { background-color: #4b3cf4;}
+  &.box2 { background-color: #00e183;}
+  &.box3 { background-color: #e1005a;}
 }
 
 .link-list {
   margin-block: 0;
   border: 6px solid;
   padding: 15px;
-  list-style-type: "";
+  list-style-type: '';
   display: flex;
   flex-flow: column;
   gap: 15px;
@@ -126,9 +177,8 @@ h1 {
       padding: 10px;
       text-decoration: none;
 
-      svg,
-      span {
-        pointer-events: none;
+      svg, span {
+        /* pointer-events: none; */
         border: 2px dashed;
         padding: 10px;
       }
