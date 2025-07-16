@@ -11,12 +11,22 @@
     <script src="https://unpkg.com/gsap/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/dompurify/dist/purify.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./assets/scripts/learn/84-async-js-ajax-library.js" defer></script>
+    <script src="./assets/scripts/learn/85-async-js-file-upload.js" defer></script>
   </head>
 
   <body>
 
     <h1>JavaScript</h1>
+
+    <form data-id="upload-form">
+      <div>
+        <label for="image">이미지</label>
+        <input type="file" name="image" id="image" accept="image/*" multiple />
+      </div>
+      <div>
+        <button type="submit">업로드</button>
+      </div>
+    </form>
 
   </body>
 
